@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:Inquirer.Converters;assembly=Inquirer"
+             xmlns:userControls="clr-namespace:Inquirer.UserControls;assembly=Inquirer"
+             mc:Ignorable="d"
+             x:Class="Inquirer.Views.ItemsPage"
+             Title="{Binding Title}"
+             x:Name="BrowseItemsPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="headerTemplate">
+            <ViewCell>
+                <Label Text="{Binding Text}" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center" Margin="5" TextColor="Blue"/>
+            </ViewCell>
+        </DataTemplate>
+
+        <DataTemplate x:Key="subHeaderTemplate">
+            <ViewCell>
+                <Label Text="{Binding Text}" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center" Margin="5" TextColor="Magenta"/>
+            </ViewCell>
+        </DataTemplate>
+
+        <DataTemplate x:Key="listTemplate">
+            <ViewCell>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Text="{Binding Text}" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center" Margin="5" TextColor="DarkSlateGray"/>
+                    <Picker Grid.Row="1" ItemsSource="{Binding ValueList}" SelectedItem="{Binding Value}"/>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+
+        <DataTemplate x:Key="textTemplate">
+            <ViewCell>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Text="{Binding Text}" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center" Margin="5" TextColor="DarkSlateGray"/>
+                    <Entry Grid.Row="1" Text="{Binding Value}"/>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+
+        <DataTemplate x:Key="starsTemplate">
+            <ViewCell>
+                <userControls:StarsSelector/>
+            </ViewCell>
+        </DataTemplate>
+
+        <DataTemplate x:Key="yesNoTemplate">
+            <ViewCell>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="{Binding Text}" HorizontalOptions="StartAndExpand" HorizontalTextAlignment="Center" VerticalOptions="Center" Margin="5" TextColor="DarkSlateGray"/>
+                    <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Center">
+                        <Label Text="Да"/>
+                        <CheckBox IsChecked="{Binding Value, Converter={converters:StringToBoolConverter}}"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="Center">
+                        <Label Text="Нет"/>
+                        <CheckBox IsChecked="{Binding Value, Converter={converters:StringToBoolConverter}, ConverterParameter=r}"/>
+                    </StackLayout>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+
+        <converters:ItemTemplateSelector x:Key="itemTemplate" 
+                                         HeaderTemplate="{StaticResource headerTemplate}"
+                                         ListTemplate="{StaticResource listTemplate}"
+                                         SubHeaderTemplate="{StaticResource subHeaderTemplate}"
+                                         TextTemplate="{StaticResource textTemplate}"
+                                         StarsTemplate="{StaticResource starsTemplate}"
+                                         YesNoTemplate="{StaticResource yesNoTemplate}"
+        >
+
+        </converters:ItemTemplateSelector>
+    </ContentPage.Resources>
+
+    <StackLayout>
+        <ListView x:Name="ItemsListView"
+                ItemsSource="{Binding Items}"
+                VerticalOptions="FillAndExpand"
+                HasUnevenRows="true"
+                RefreshCommand="{Binding LoadItemsCommand}"
+                IsPullToRefreshEnabled="true"
+                IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                CachingStrategy="RecycleElement"
+                ItemSelected="OnItemSelected"
+                ItemTemplate="{StaticResource itemTemplate}">
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
