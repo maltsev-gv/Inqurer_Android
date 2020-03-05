@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:Inquirer_Android.Converters;assembly=Inquirer_Android"
+             mc:Ignorable="d"
+             x:Class="Inquirer_Android.UserControls.GrayEntry"
+             x:Name="grayEntry">
+    <ContentView.Content>
+        <Frame Grid.Row="1" BorderColor="Gray" CornerRadius="10" Padding="5,0" MinimumHeightRequest="50">
+            <Frame.Style>
+                <Style TargetType="{x:Type Frame}">
+                    <Style.Triggers>
+                        <DataTrigger TargetType="{x:Type Frame}" Binding="{Binding Text, Converter={converters:EmptyStringToBoolConverter}, Source={x:Reference grayEntry}}" Value="false">
+                            <Setter Property="BackgroundColor" Value="#EEEEEE"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Frame.Style>
+            <Grid>
+                <Label Text="{Binding Prompt, Source={x:Reference grayEntry}}" TextColor="Gray" 
+                       IsVisible="{Binding Text, Source={x:Reference grayEntry}, Converter={converters:EmptyStringToBoolConverter}, ConverterParameter=r}" 
+                     VerticalOptions="Center" Margin="5,0"/>
+                <Entry Text="{Binding Text, Source={x:Reference grayEntry}}" IsPassword="{Binding IsPassword, Source={x:Reference grayEntry}}" 
+                       Keyboard="{Binding Keyboard, Source={x:Reference grayEntry}}"/>
+            </Grid>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

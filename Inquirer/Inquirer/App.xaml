@@ -4,8 +4,18 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Inquirer.App">
+             x:Class="Inquirer_Android.App">
     <Application.Resources>
-        
+        <Color x:Key="NavigationPrimary">#FE9225</Color>
+
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="BackgroundColor" Value="{StaticResource NavigationPrimary}"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BorderColor" Value="Wheat"/>
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
     </Application.Resources>
 </Application>

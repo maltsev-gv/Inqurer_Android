@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:converters="clr-namespace:Inquirer.Converters;assembly=Inquirer_Android"
-             xmlns:userControls="clr-namespace:Inquirer.UserControls;assembly=Inquirer_Android"
+             xmlns:converters="clr-namespace:Inquirer_Android.Converters;assembly=Inquirer_Android"
+             xmlns:userControls="clr-namespace:Inquirer_Android.UserControls;assembly=Inquirer_Android"
              mc:Ignorable="d"
-             x:Class="Inquirer.Views.ItemsPage"
+             x:Class="Inquirer_Android.Views.ItemsPage"
              Title="{Binding Title}"
              x:Name="BrowseItemsPage">
 

@@ -2,13 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Inquirer.Interfaces;
 using Xamarin.Forms;
+using Inquirer_Android.Interfaces;
+using Inquirer_Android.Models;
+using Inquirer_Android.Views;
 
-using Inquirer.Models;
-using Inquirer.Views;
-
-namespace Inquirer.ViewModels
+namespace Inquirer_Android.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
@@ -25,7 +24,7 @@ namespace Inquirer.ViewModels
             {
                 var newItem = item as ItemInfo;
                 Items.Add(newItem);
-                await DataStore.AddItemAsync(newItem);
+                //await DataStore.AddItemAsync(newItem);
             });
 
             var settings = DependencyService.Get<IAppSettings>();
@@ -41,11 +40,11 @@ namespace Inquirer.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
-                foreach (var item in items)
-                {
-                    Items.Add(item);
-                }
+                //var items = await DataStore.GetItemsAsync(true);
+                //foreach (var item in items)
+                //{
+                //    Items.Add(item);
+                //}
             }
             catch (Exception ex)
             {

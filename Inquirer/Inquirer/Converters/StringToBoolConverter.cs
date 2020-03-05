@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Globalization;
-using Inquirer.Models;
+using Inquirer_Android.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Inquirer.Converters
+namespace Inquirer_Android.Converters
 {
     public class StringToBoolConverter : IValueConverter, IMarkupExtension
     {

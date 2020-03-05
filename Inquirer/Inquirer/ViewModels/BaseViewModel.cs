@@ -4,15 +4,14 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 using Xamarin.Forms;
+using Inquirer_Android.Models;
+using Inquirer_Android.Services;
 
-using Inquirer.Models;
-using Inquirer.Services;
-
-namespace Inquirer.ViewModels
+namespace Inquirer_Android.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<ItemInfo> DataStore => DependencyService.Get<IDataStore<ItemInfo>>();
+        public IDataStore DataStore => DependencyService.Get<IDataStore>();
 
         bool isBusy = false;
         public bool IsBusy

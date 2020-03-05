@@ -2,8 +2,9 @@
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Inquirer.Droid;
 
-namespace Inquirer.Droid
+namespace Inquirer_Android.Droid
 {
     [Activity(Label = "Опросник", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity

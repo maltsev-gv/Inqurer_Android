@@ -1,8 +1,7 @@
 ﻿using System;
+using Inquirer_Android.Models;
 
-using Inquirer.Models;
-
-namespace Inquirer.ViewModels
+namespace Inquirer_Android.ViewModels
 {
     public class ItemDetailViewModel : BaseViewModel
     {

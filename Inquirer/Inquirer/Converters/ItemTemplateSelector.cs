@@ -1,8 +1,8 @@
 ﻿using System;
-using Inquirer.Models;
+using Inquirer_Android.Models;
 using Xamarin.Forms;
 
-namespace Inquirer.Converters
+namespace Inquirer_Android.Converters
 {
     public class ItemTemplateSelector : DataTemplateSelector
     {

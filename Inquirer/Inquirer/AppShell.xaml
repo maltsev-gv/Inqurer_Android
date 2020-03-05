@@ -4,16 +4,15 @@
        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        mc:Ignorable="d"
-       xmlns:local="clr-namespace:Inquirer.Views"
+       xmlns:local="clr-namespace:Inquirer_Android.Views"
        Title="Inquirer"
-       x:Class="Inquirer.AppShell">
+       x:Class="Inquirer_Android.AppShell" SizeChanged="AppShell_OnSizeChanged">
 
     <!-- 
         Styles and Resources 
     -->
     <Shell.Resources>
         <ResourceDictionary>
-            <Color x:Key="NavigationPrimary">#2196F3</Color>
             <Style x:Key="BaseStyle" TargetType="Element">
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource NavigationPrimary}" />
                 <Setter Property="Shell.ForegroundColor" Value="White" />
@@ -32,26 +31,32 @@
     
     <!-- Your Pages -->
     <TabBar >
-        <Tab Title="Browse" Icon="tab_feed.png">
-            <ShellContent ContentTemplate="{DataTemplate local:ItemsPage}" />
+        <Tab Title="Авторизация" Icon="tab_feed.png">
+            <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" />
         </Tab>
-        <Tab Title="About" Icon="tab_about.png">
-            <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" />
-        </Tab>
-        <Tab Title="Browse2" Icon="tab_feed.png">
-            <ShellContent ContentTemplate="{DataTemplate local:ItemsPage}" />
-        </Tab>
-        <Tab Title="About2" Icon="tab_about.png">
-            <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" />
-        </Tab>
-        <Tab Title="Browse3" Icon="tab_feed.png">
-            <ShellContent ContentTemplate="{DataTemplate local:ItemsPage}" />
-        </Tab>
-        <Tab Title="About3" Icon="tab_about.png">
-            <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" />
+        <Tab Title="Регистрация" Icon="tab_about.png">
+            <ShellContent ContentTemplate="{DataTemplate local:RegistrationPage}" />
         </Tab>
     </TabBar>
 
+    <!--<Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid>
+                <Label Text="FlyoutHeader"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
+    --><!--ItemTemplate is for ShellItems as displayed in a Flyout--><!--
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <ContentView >
+                <Label Text="Shell.Item"/>
+                --><!--Bindable Properties: Title, Icon--><!--
+            </ContentView>
+        </DataTemplate>
+    </Shell.ItemTemplate>-->
+    
     <!-- Optional Templates 
     // These may be provided inline as below or as separate classes.
 

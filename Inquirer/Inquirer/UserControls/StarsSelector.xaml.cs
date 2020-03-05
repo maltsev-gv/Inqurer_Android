@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Inquirer.UserControls
+namespace Inquirer_Android.UserControls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StarsSelector : ContentView

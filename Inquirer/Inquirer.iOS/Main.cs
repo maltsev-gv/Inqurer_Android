@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace Inquirer.iOS
+namespace Inquirer_Android.iOS
 {
     public class Application
     {

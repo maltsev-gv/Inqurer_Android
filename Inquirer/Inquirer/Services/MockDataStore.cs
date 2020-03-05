@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Inquirer.Models;
+using Inquirer_Android.Models;
 
-namespace Inquirer.Services
+namespace Inquirer_Android.Services
 {
-    public class MockDataStore : IDataStore<ItemInfo>
+    public class MockDataStore //: IDataStore<ItemInfo>
     {
         readonly List<ItemInfo> items;
 

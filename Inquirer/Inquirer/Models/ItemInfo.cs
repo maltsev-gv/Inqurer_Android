@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Inquirer.Models
+namespace Inquirer_Android.Models
 {
     public class ItemInfo
     {
