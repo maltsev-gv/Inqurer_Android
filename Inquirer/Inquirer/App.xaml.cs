@@ -1,10 +1,10 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Inquirer_Android.Views;
-using Inquirer_Android.Services;
+using InquirerForAndroid.Views;
+using InquirerForAndroid.Services;
 
-namespace Inquirer_Android
+namespace InquirerForAndroid
 {
     public partial class App : Application
     {

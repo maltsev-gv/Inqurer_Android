@@ -3,38 +3,49 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:converters="clr-namespace:Inquirer_Android.Converters;assembly=Inquirer_Android"
-             xmlns:userControls="clr-namespace:Inquirer_Android.UserControls;assembly=Inquirer_Android"
-             xmlns:viewmodels="clr-namespace:Inquirer_Android.ViewModels"
+             xmlns:converters="clr-namespace:InquirerForAndroid.Converters;assembly=InquirerForAndroid"
+             xmlns:userControls="clr-namespace:InquirerForAndroid.UserControls;assembly=InquirerForAndroid"
+             xmlns:viewmodels="clr-namespace:InquirerForAndroid.ViewModels"
              mc:Ignorable="d"
-             x:Class="Inquirer_Android.Views.RegistrationPage"
+             x:Class="InquirerForAndroid.Views.RegistrationPage"
              Title="{Binding Title}">
     <ContentPage.BindingContext>
         <viewmodels:RegistrationViewModel/>
     </ContentPage.BindingContext>
 
     <ScrollView>
-
-        <Grid HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="{Binding HalfWidth}">
+        <Grid VerticalOptions="Fill">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Text="Опросник" FontSize="36" FontAttributes="Italic,Bold" Margin="0,20" HorizontalOptions="Center" TextColor="Black"/>
+            <Grid WidthRequest="{Binding HalfWidth}" HorizontalOptions="Center" VerticalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Text="Опросник" FontSize="36" FontAttributes="Italic,Bold" Margin="0,20" HorizontalOptions="Center" TextColor="Black"/>
 
-            <userControls:GrayEntry Grid.Row="1" Text="{Binding Login}" Prompt="Имя пользователя"/>
+                <userControls:GrayEntry Grid.Row="1" Text="{Binding Login}" Prompt="Имя пользователя"/>
 
-            <userControls:GrayEntry Grid.Row="2" Text="{Binding Password1}" Prompt="Пароль" IsPassword="True"/>
+                <userControls:GrayEntry Grid.Row="2" Text="{Binding Password}" Prompt="Пароль" IsPassword="True"/>
 
-            <userControls:GrayEntry Grid.Row="3" Text="{Binding Password2}" Prompt="Пароль ещё раз" IsPassword="True"/>
+                <userControls:GrayEntry Grid.Row="4" Text="{Binding Pin}" Prompt="Введите PIN-код *" Keyboard="Numeric"/>
 
-            <userControls:GrayEntry Grid.Row="4" Text="{Binding Pin}" Prompt="Введите PIN-код" Keyboard="Numeric"/>
+                <Button Grid.Row="5" Text="Регистрация" Margin="0,20" Command="{Binding RegisterCommand}" IsEnabled="{Binding Pin, Converter={converters:EmptyStringToBoolConverter}}"/>
 
-            <Button Grid.Row="5" Text="Регистрация" Margin="0,20" Command="{Binding RegisterCommand}"/>
+            </Grid>
+            <Label Grid.Row="1"
+                   Text="* PIN-код является обязательным полем для регистрации." 
+                   Margin="20,0" HorizontalOptions="Center" HorizontalTextAlignment="Start" VerticalOptions="End"/>
+            <Label Grid.Row="2"
+                   Text="Если Вы хотите продолжать проходить опросы на других устройствах, Вам также необходимо указать имя пользователя и пароль" 
+                   Margin="20,0,0,10" HorizontalOptions="Center" HorizontalTextAlignment="Start" VerticalOptions="End"/>
         </Grid>
     </ScrollView>
 </ContentPage>

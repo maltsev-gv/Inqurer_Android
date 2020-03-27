@@ -7,11 +7,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inquirer.Android", "Inquire
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inquirer.iOS", "Inquirer\Inquirer.iOS\Inquirer.iOS.csproj", "{0157B42F-631B-49C4-9530-2C3A8281C83B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inquirer_Android", "Inquirer\Inquirer\Inquirer_Android.csproj", "{56941677-F359-4CED-96F9-D2A79526CA76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InquirerForAndroid", "Inquirer\Inquirer\InquirerForAndroid.csproj", "{56941677-F359-4CED-96F9-D2A79526CA76}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rcn.Interfaces", "..\cmn_Interfaces\Rcn.Interfaces\Rcn.Interfaces.csproj", "{AE63A784-7263-45E0-9769-1EFC6D5A039C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rcn.Common", "..\cmn_Interfaces\Rcn.Common\Rcn.Common.csproj", "{990796E0-6B30-49E5-9AA5-6A6A91CDF971}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGet", "NuGet", "{97117121-BDB6-4152-8153-A7E8BB2D79D5}"
+	ProjectSection(SolutionItems) = preProject
+		..\NuGet.config = ..\NuGet.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

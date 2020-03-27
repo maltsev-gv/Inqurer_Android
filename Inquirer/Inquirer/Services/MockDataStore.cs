@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Inquirer_Android.Models;
+using InquirerForAndroid.Models;
 
-namespace Inquirer_Android.Services
+namespace InquirerForAndroid.Services
 {
     public class MockDataStore //: IDataStore<ItemInfo>
     {

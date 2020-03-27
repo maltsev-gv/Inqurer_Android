@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using InquirerForAndroid.Models;
+using InquirerForAndroid.ViewModels;
 using Xamarin.Forms;
 
-namespace Inquirer_Android
+namespace InquirerForAndroid
 {
     public class Globals
     {
@@ -17,6 +19,9 @@ namespace Inquirer_Android
                 ActivePageChanged?.Invoke();
             }
         }
+
+        public static UserInfo CurrentUser { get; set; }
+        public static ViewModelBase CurrentViewModel { get; set; }
 
         public static Action ActivePageChanged;
     }

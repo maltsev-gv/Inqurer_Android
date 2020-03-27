@@ -4,10 +4,10 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 using Xamarin.Forms;
-using Inquirer_Android.Models;
-using Inquirer_Android.Services;
+using InquirerForAndroid.Models;
+using InquirerForAndroid.Services;
 
-namespace Inquirer_Android.ViewModels
+namespace InquirerForAndroid.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

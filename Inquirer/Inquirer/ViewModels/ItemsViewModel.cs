@@ -3,11 +3,11 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Inquirer_Android.Interfaces;
-using Inquirer_Android.Models;
-using Inquirer_Android.Views;
+using InquirerForAndroid.Interfaces;
+using InquirerForAndroid.Models;
+using InquirerForAndroid.Views;
 
-namespace Inquirer_Android.ViewModels
+namespace InquirerForAndroid.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {

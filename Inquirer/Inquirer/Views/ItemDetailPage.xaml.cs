@@ -2,10 +2,10 @@
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Inquirer_Android.Models;
-using Inquirer_Android.ViewModels;
+using InquirerForAndroid.Models;
+using InquirerForAndroid.ViewModels;
 
-namespace Inquirer_Android.Views
+namespace InquirerForAndroid.Views
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
@@ -19,6 +19,7 @@ namespace Inquirer_Android.Views
             InitializeComponent();
 
             BindingContext = this.viewModel = viewModel;
+            Shell.SetFlyoutBehavior(this, FlyoutBehavior.Flyout);
         }
 
         public ItemDetailPage()

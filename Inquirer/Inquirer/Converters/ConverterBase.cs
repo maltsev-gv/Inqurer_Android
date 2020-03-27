@@ -3,7 +3,7 @@ using System.Globalization;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Inquirer_Android.Converters
+namespace InquirerForAndroid.Converters
 {
     public class ConverterBase : IMarkupExtension, IValueConverter
     {

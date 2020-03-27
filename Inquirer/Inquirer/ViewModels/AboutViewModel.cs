@@ -3,7 +3,7 @@ using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace Inquirer_Android.ViewModels
+namespace InquirerForAndroid.ViewModels
 {
     public class AboutViewModel : BaseViewModel
     {

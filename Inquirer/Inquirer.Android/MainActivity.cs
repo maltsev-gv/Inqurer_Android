@@ -4,7 +4,7 @@ using Android.Runtime;
 using Android.OS;
 using Inquirer.Droid;
 
-namespace Inquirer_Android.Droid
+namespace InquirerForAndroid.Droid
 {
     [Activity(Label = "Опросник", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
@@ -27,5 +27,18 @@ namespace Inquirer_Android.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+        public override void OnBackPressed()
+        {
+            var page = (AppShell)Xamarin.Forms.Application.Current.MainPage;
+            page.RaiseOnBackPressed();
+        }
+
+        //public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+        //{
+        //    Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        //}
+
+
     }
 }

@@ -89,11 +89,13 @@
     <AndroidResource Include="Resources\drawable\tab_feed.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Inquirer\Inquirer_Android.csproj">
+    <ProjectReference Include="..\Inquirer\InquirerForAndroid.csproj">
       <Project>{56941677-F359-4CED-96F9-D2A79526CA76}</Project>
-      <Name>Inquirer_Android</Name>
+      <Name>InquirerForAndroid</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\eye.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

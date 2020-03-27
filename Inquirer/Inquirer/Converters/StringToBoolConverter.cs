@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Globalization;
-using Inquirer_Android.Models;
+using InquirerForAndroid.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Inquirer_Android.Converters
+namespace InquirerForAndroid.Converters
 {
-    public class StringToBoolConverter : IValueConverter, IMarkupExtension
+    public class StringToBoolConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -26,11 +26,6 @@ namespace Inquirer_Android.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value.ToString();
-        }
-
-        public object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return null;
         }
     }
 }

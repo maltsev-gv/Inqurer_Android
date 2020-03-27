@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Inquirer_Android.Views.NewItemPage"
+             x:Class="InquirerForAndroid.Views.NewItemPage"
              Title="New Item">
     
     <ContentPage.ToolbarItems>

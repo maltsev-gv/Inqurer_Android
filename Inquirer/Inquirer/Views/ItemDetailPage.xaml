@@ -4,8 +4,13 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Inquirer_Android.Views.ItemDetailPage"
+             x:Class="InquirerForAndroid.Views.ItemDetailPage"
              Title="{Binding Title}">
+    <ShellContent.MenuItems>
+        <MenuItem Text="111"/>
+        <MenuItem Text="222"/>
+        <MenuItem Text="333"/>
+    </ShellContent.MenuItems>
 
     <StackLayout Spacing="20" Padding="15">
         <Label Text="Text:" FontSize="Medium" />

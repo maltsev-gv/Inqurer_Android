@@ -1,4 +1,4 @@
-﻿namespace Inquirer_Android.Interfaces
+﻿namespace InquirerForAndroid.Interfaces
 {
     public interface IAppSettings
     {

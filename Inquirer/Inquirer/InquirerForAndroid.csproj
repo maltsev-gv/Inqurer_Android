@@ -30,6 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\EnterpriseSelectorPage.xaml.cs">
+      <DependentUpon>EnterpriseSelectorPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
     </Compile>

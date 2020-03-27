@@ -1,11 +1,11 @@
 ﻿using Android.Content;
 using Android.Content.PM;
-using Inquirer_Android.Droid.Services;
-using Inquirer_Android.Interfaces;
+using InquirerForAndroid.Droid.Services;
+using InquirerForAndroid.Interfaces;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(AppSettingsDroid))]
-namespace Inquirer_Android.Droid.Services
+namespace InquirerForAndroid.Droid.Services
 {
     public class AppSettingsDroid : IAppSettings
     {

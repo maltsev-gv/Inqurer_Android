@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Inquirer_Android.UserControls
+namespace InquirerForAndroid.UserControls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GrayEntry : ContentView
@@ -56,6 +56,20 @@ namespace Inquirer_Android.UserControls
         private static bool OnKeyboardChanged(BindableObject bindable, object value)
         {
             return true;
+        }
+
+        private void ImageButton_OnPressed(object sender, EventArgs e)
+        {
+            var pos = entry.CursorPosition;
+            entry.IsPassword = false;
+            entry.CursorPosition = pos;
+        }
+
+        private void ImageButton_OnReleased(object sender, EventArgs e)
+        {
+            var pos = entry.CursorPosition;
+            entry.IsPassword = true;
+            entry.CursorPosition = pos;
         }
     }
 }

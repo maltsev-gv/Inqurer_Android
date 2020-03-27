@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using Inquirer_Android.Views;
-using Inquirer_Android.Models;
-using Inquirer_Android.ViewModels;
+using InquirerForAndroid.Views;
+using InquirerForAndroid.Models;
+using InquirerForAndroid.ViewModels;
 
-namespace Inquirer_Android.Views
+namespace InquirerForAndroid.Views
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer

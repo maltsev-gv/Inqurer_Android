@@ -1,11 +1,11 @@
 ﻿using System;
-using Inquirer_Android.Services;
+using InquirerForAndroid.Services;
 using Rcn.Common;
 using Rcn.Common.ExtensionMethods;
 using Xamarin.Forms;
 using Xamarin.Essentials;
 
-namespace Inquirer_Android.ViewModels
+namespace InquirerForAndroid.ViewModels
 {
     public abstract class ViewModelBase : ObservableObject
     {

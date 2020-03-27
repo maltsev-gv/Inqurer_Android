@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:InquirerForAndroid.Converters;assembly=InquirerForAndroid"
+             xmlns:userControls="clr-namespace:InquirerForAndroid.UserControls;assembly=InquirerForAndroid"
+             xmlns:viewmodels="clr-namespace:InquirerForAndroid.ViewModels"
+             xmlns:subComponents="clr-namespace:InquirerForAndroid.ViewModels.SubComponents;assembly=InquirerForAndroid"
+             mc:Ignorable="d"
+             x:Class="InquirerForAndroid.Views.EnterpriseSelectorPage"
+             Title="{Binding Title}">
+    <ContentPage.BindingContext>
+        <viewmodels:RegistrationViewModel/>
+    </ContentPage.BindingContext>
+
+    <!--<Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding RegisterCommand}"
+                            IconOverride="about.png"/>
+    </Shell.BackButtonBehavior>-->
+
+    <!--<Shell.TabBarIsVisible>false</Shell.TabBarIsVisible>-->
+
+    <Shell.SearchHandler>
+        <subComponents:EnterpriseSearchHandler Placeholder="Название предприятия" ShowsResults="True" DisplayMemberName="Name" Keyboard="Text"/>
+    </Shell.SearchHandler>
+
+    <StackLayout>
+        <ScrollView>
+            <Label Text="some text"></Label>
+        </ScrollView>
+    </StackLayout>
+
+</ContentPage>

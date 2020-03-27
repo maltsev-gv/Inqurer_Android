@@ -4,9 +4,10 @@
        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        mc:Ignorable="d"
-       xmlns:local="clr-namespace:Inquirer_Android.Views"
+       xmlns:local="clr-namespace:InquirerForAndroid.Views"
+       xmlns:viewModels="clr-namespace:InquirerForAndroid.ViewModels;assembly=InquirerForAndroid"
        Title="Inquirer"
-       x:Class="Inquirer_Android.AppShell" SizeChanged="AppShell_OnSizeChanged">
+       x:Class="InquirerForAndroid.AppShell" SizeChanged="AppShell_OnSizeChanged">
 
     <!-- 
         Styles and Resources 
@@ -28,35 +29,127 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    
-    <!-- Your Pages -->
+    <Shell.BindingContext>
+        <viewModels:AppShellViewModel/>
+    </Shell.BindingContext>
+
+    <!--<Shell.FlyoutBehavior>Disabled</Shell.FlyoutBehavior>-->
+
+    <MenuItem Text="111 222" d:Routing.Route="AuthPage"/>
+    <MenuItem Text="222" />
+    <MenuItem Text="333" />
+
     <TabBar >
+        <Tab Title="Авторизация" Icon="tab_feed.png">
+            <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" Route="AuthPage"/>
+        </Tab>
+        <Tab Title="Регистрация" Icon="tab_about.png">
+            <ShellContent Title="1st"
+                          ContentTemplate="{DataTemplate local:RegistrationPage}" >
+            </ShellContent>
+            <!--<ShellContent 
+                Title="2nd"
+                ContentTemplate="{DataTemplate local:ItemDetailPage}">
+                <ShellContent.MenuItems>
+                    <MenuItem Text="111"/>
+                    <MenuItem Text="222"/>
+                    <MenuItem Text="333"/>
+                </ShellContent.MenuItems>
+            </ShellContent>-->
+        </Tab>
+    </TabBar>
+
+    <!--<FlyoutItem Title="ItemDetailPage" Icon="xamarin.png" FlyoutDisplayOptions="AsMultipleItems">
         <Tab Title="Авторизация" Icon="tab_feed.png">
             <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" />
         </Tab>
         <Tab Title="Регистрация" Icon="tab_about.png">
-            <ShellContent ContentTemplate="{DataTemplate local:RegistrationPage}" />
+            <ShellContent Title="1st"
+                          ContentTemplate="{DataTemplate local:RegistrationPage}" />
+            <ShellContent 
+                Title="2nd"
+                ContentTemplate="{DataTemplate local:ItemDetailPage}">
+                <ShellContent.MenuItems>
+                    <MenuItem Text="111"/>
+                    <MenuItem Text="222"/>
+                    <MenuItem Text="333"/>
+                </ShellContent.MenuItems>
+            </ShellContent>
         </Tab>
-    </TabBar>
+    </FlyoutItem>-->
 
-    <!--<Shell.FlyoutHeaderTemplate>
+
+    <Shell.MenuItemTemplate>
         <DataTemplate>
-            <Grid>
-                <Label Text="FlyoutHeader"/>
+            <Grid BackgroundColor="Aqua">
+                <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.2*" />
+                    <ColumnDefinition Width="0.8*" />
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding Icon}"
+                       Margin="5"
+                       HeightRequest="45" />
+                <Label Grid.Column="0" Grid.ColumnSpan="2" 
+                       Text="{Binding Text}"
+                       FontAttributes="Italic"
+                       FontSize="Title"
+                       TextColor="Red">
+                    <Label.Triggers>
+                        <Trigger Property="Label.IsFocused" Value="True" TargetType="Label">
+                            <Setter Property="BackgroundColor" Value="Black"/>
+                        </Trigger>
+                    </Label.Triggers>
+                </Label>-->
+
+                <Button BackgroundColor="LightBlue" Margin="5"
+                             HorizontalOptions="Fill" 
+                             VerticalOptions="Center"
+                             ImageSource="tab_about.png"
+                             Text="{Binding Text}"
+                             FontAttributes="Italic"
+                             FontSize="Title"
+                             TextColor="Red"
+                             Command="{Binding Command}">
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale"
+                                            Value="1" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale"
+                                            Value="0.5" />
+                                    <Setter Property="BackgroundColor"
+                                            Value="White" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                </Button>
+
             </Grid>
         </DataTemplate>
-    </Shell.FlyoutHeaderTemplate>
+    </Shell.MenuItemTemplate>
 
-    --><!--ItemTemplate is for ShellItems as displayed in a Flyout--><!--
+
+    <!--ItemTemplate is for ShellItems as displayed in a Flyout-->
+    <!--
     <Shell.ItemTemplate>
         <DataTemplate>
             <ContentView >
                 <Label Text="Shell.Item"/>
-                --><!--Bindable Properties: Title, Icon--><!--
+                -->
+    <!--Bindable Properties: Title, Icon-->
+    <!--
             </ContentView>
         </DataTemplate>
     </Shell.ItemTemplate>-->
-    
+
     <!-- Optional Templates 
     // These may be provided inline as below or as separate classes.
 
