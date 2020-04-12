@@ -1,4 +1,9 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Timers;
+using System.Windows.Input;
 using Rcn.Common;
 using Rcn.Common.ExtensionMethods;
 using Xamarin.Forms;
@@ -10,33 +15,107 @@ namespace InquirerForAndroid.ViewModels
         public RegistrationViewModel()
         {
             Title = "Добро пожаловать";
+            ButtonStateText = "Скачать приложение";
             RegisterCommand = new Command(RegisterMethod);
+            DownloadCommand = new Command(DownloadMethod);
+            SetupCommand = new Command(SetupMethod);
+            var path = DeviceService.GetExternalStorage();
+            var files = Directory.EnumerateFiles(path, "*.apk").ToArray();
+            if (files.Length > 0)
+            {
+                ApkName = new FileInfo(files[0]).Name;
+                FileName = files[0];
+            }
         }
+
+        private async void DownloadMethod()
+        {
+            try
+            {
+                IsRefreshing = true;
+                ButtonStateText = _downloadText;
+                var fileName = await DataStore.GetApk(1, OnProgressChanged);
+                FileName = fileName;
+                ApkName = new FileInfo(fileName).Name;
+            }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+            finally
+            {
+                IsRefreshing = false;
+            }
+        }
+
+        private void SetupMethod()
+        {
+            var installed = DeviceService.GetInstalledApps();
+            DeviceService.InstallApk(FileName);
+        }
+
+        private const string _downloadText = "Скачивание: ";
+
+        //private Timer _timer = new Timer(200) { AutoReset = true };
+
+        private DateTime startTime;
 
         private async void RegisterMethod()
         {
-            if (Password.IsNullOrWhiteSpace())
+            try
             {
-                var registerAnyway = await AppShell.Alert("Не указан логин/пароль",
-                    "Вы ввели только PIN-код. Уверены, что хотите продолжить?",
-                    "Да", "Нет");
-                if (!registerAnyway)
+                var user = await DataStore.Auth(Login);
+                if (user == null)
                 {
+                    await AppShell.Alert("Вход не удался",
+                        "Введен неверный PIN-код, либо данный PIN-код уже не действителен.",
+                        null, "ОК");
                     return;
                 }
+                Globals.CurrentUser = user;
             }
-
-            var user =  DataStore.Auth(Login, Password, Pin);
-            if (user == null)
+            catch (Exception ex)
             {
-                await AppShell.Alert("Вход не удался",
-                    "Введен неверный PIN-код, либо данный PIN-код уже не действителен.",
-                    null, "ОК");
-                return;
+                ErrorMessage = ex.Message;
+            }
+            finally
+            {
+                IsRefreshing = false;
             }
 
-            Globals.CurrentUser = user;
             AppShell.GoToPage(new EnterpriseSelectorViewModel());
+
+
+            //DeviceService.RunExternalApp();
+
+            //if (Password.IsNullOrWhiteSpace())
+            //{
+            //    var registerAnyway = await AppShell.Alert("Не указан логин/пароль",
+            //        "Вы ввели только PIN-код. Уверены, что хотите продолжить?",
+            //        "Да", "Нет");
+            //    if (!registerAnyway)
+            //    {
+            //        return;
+            //    }
+            //}
+
+        }
+
+        private void OnProgressChanged(double part)
+        {
+            ButtonStateText = $"Скачано {part * 100:F1}%";
+        }
+
+        public string ButtonStateText
+        {
+            get => GetVal<string>();
+            set => SetVal(value);
+        }
+
+        public string ApkName
+        {
+            get => GetVal<string>();
+            set => SetVal(value);
         }
 
         public string Login
@@ -45,7 +124,7 @@ namespace InquirerForAndroid.ViewModels
             set => SetVal(value);
         }
 
-        public string Password
+        public string FileName
         {
             get => GetVal<string>();
             set => SetVal(value);
@@ -58,6 +137,8 @@ namespace InquirerForAndroid.ViewModels
         }
 
         public ICommand RegisterCommand { get; set; }
+        public ICommand DownloadCommand { get; set; }
+        public ICommand SetupCommand { get; set; }
 
         //public object BackCommand
         //{

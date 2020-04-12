@@ -59,3 +59,4 @@ dkms.conf
 /Models/obj/Debug
 Inquirer/Inquirer.Android/bin/
 /Inquirer/Inquirer.iOS/bin
+/InquirerForAndroid.sln.DotSettings.user

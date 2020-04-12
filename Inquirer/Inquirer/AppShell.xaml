@@ -35,27 +35,24 @@
 
     <!--<Shell.FlyoutBehavior>Disabled</Shell.FlyoutBehavior>-->
 
-    <MenuItem Text="111 222" d:Routing.Route="AuthPage"/>
+    <MenuItem Text="Лаунчер" 
+              IconImageSource="tab_feed.png"
+              Command="{Binding GotToPageCommand}">
+        <MenuItem.CommandParameter>
+            <viewModels:RegistrationViewModel/>
+        </MenuItem.CommandParameter>
+    </MenuItem>
     <MenuItem Text="222" />
     <MenuItem Text="333" />
 
     <TabBar >
+        <Tab Title="Новости" Icon="tab_about.png">
+            <ShellContent Title="1st"
+                          ContentTemplate="{DataTemplate local:NewsPage}" >
+            </ShellContent>
+        </Tab>
         <Tab Title="Авторизация" Icon="tab_feed.png">
             <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" Route="AuthPage"/>
-        </Tab>
-        <Tab Title="Регистрация" Icon="tab_about.png">
-            <ShellContent Title="1st"
-                          ContentTemplate="{DataTemplate local:RegistrationPage}" >
-            </ShellContent>
-            <!--<ShellContent 
-                Title="2nd"
-                ContentTemplate="{DataTemplate local:ItemDetailPage}">
-                <ShellContent.MenuItems>
-                    <MenuItem Text="111"/>
-                    <MenuItem Text="222"/>
-                    <MenuItem Text="333"/>
-                </ShellContent.MenuItems>
-            </ShellContent>-->
         </Tab>
     </TabBar>
 
@@ -82,14 +79,14 @@
     <Shell.MenuItemTemplate>
         <DataTemplate>
             <Grid BackgroundColor="Aqua">
-                <!--<Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.2*" />
                     <ColumnDefinition Width="0.8*" />
                 </Grid.ColumnDefinitions>
                 <Image Source="{Binding Icon}"
                        Margin="5"
                        HeightRequest="45" />
-                <Label Grid.Column="0" Grid.ColumnSpan="2" 
+                <Label Grid.Column="1" HorizontalOptions="Start" Margin="10,0" VerticalOptions="Center"
                        Text="{Binding Text}"
                        FontAttributes="Italic"
                        FontSize="Title"
@@ -99,9 +96,9 @@
                             <Setter Property="BackgroundColor" Value="Black"/>
                         </Trigger>
                     </Label.Triggers>
-                </Label>-->
+                </Label>
 
-                <Button BackgroundColor="LightBlue" Margin="5"
+                <!--<Button BackgroundColor="LightBlue" Margin="5"
                              HorizontalOptions="Fill" 
                              VerticalOptions="Center"
                              ImageSource="tab_about.png"
@@ -109,6 +106,7 @@
                              FontAttributes="Italic"
                              FontSize="Title"
                              TextColor="Red"
+                             Clicked="Button_OnClicked"
                              Command="{Binding Command}">
                     <VisualStateManager.VisualStateGroups>
                         <VisualStateGroup x:Name="CommonStates">
@@ -122,7 +120,7 @@
                             <VisualState x:Name="Pressed">
                                 <VisualState.Setters>
                                     <Setter Property="Scale"
-                                            Value="0.5" />
+                                            Value="0.8" />
                                     <Setter Property="BackgroundColor"
                                             Value="White" />
                                 </VisualState.Setters>
@@ -130,7 +128,7 @@
 
                         </VisualStateGroup>
                     </VisualStateManager.VisualStateGroups>
-                </Button>
+                </Button>-->
 
             </Grid>
         </DataTemplate>

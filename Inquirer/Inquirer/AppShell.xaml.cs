@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using InquirerForAndroid.Services;
 using InquirerForAndroid.ViewModels;
 using InquirerForAndroid.Views;
 using Xamarin.Forms;
@@ -19,6 +20,7 @@ namespace InquirerForAndroid
             Globals.ActivePageChanged += OnActivePageChanged;
             Routing.RegisterRoute(nameof(AuthPage), typeof(AuthPage));
             Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
+            Routing.RegisterRoute(nameof(NewsPage), typeof(NewsPage));
             Routing.RegisterRoute(nameof(EnterpriseSelectorPage), typeof(EnterpriseSelectorPage));
             Routing.RegisterRoute(nameof(AboutPage), typeof(AboutPage));
         }
@@ -106,6 +108,19 @@ namespace InquirerForAndroid
         //}
         public void RaiseOnBackPressed()
         {
+        }
+
+        private async void MenuItem_OnClicked(object sender, EventArgs e)
+        {
+            var route = Routing.GetRoute((BindableObject) sender);
+            await Current.GoToAsync(route);
+        }
+
+        private async void Button_OnClicked(object sender, EventArgs e)
+        {
+            var menuItem = ((Element) sender).GetParentOfType<MenuItem>();
+             var route = Routing.GetRoute(menuItem);
+            await Current.GoToAsync(route);
         }
     }
 }

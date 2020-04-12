@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="RightMenuShellRenderer.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -136,7 +137,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Inquirer\Inquirer_Android.csproj">
+    <ProjectReference Include="..\Inquirer\InquirerForAndroid.csproj">
       <Project>{56941677-F359-4CED-96F9-D2A79526CA76}</Project>
       <Name>Inquirer_Android</Name>
     </ProjectReference>

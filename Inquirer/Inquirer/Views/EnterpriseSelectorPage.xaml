@@ -18,12 +18,13 @@
         <BackButtonBehavior Command="{Binding RegisterCommand}"
                             IconOverride="about.png"/>
     </Shell.BackButtonBehavior>-->
+    <!--<Shell.FlyoutBehavior>Flyout</Shell.FlyoutBehavior>-->
 
     <!--<Shell.TabBarIsVisible>false</Shell.TabBarIsVisible>-->
 
-    <Shell.SearchHandler>
+    <!--<Shell.SearchHandler>
         <subComponents:EnterpriseSearchHandler Placeholder="Название предприятия" ShowsResults="True" DisplayMemberName="Name" Keyboard="Text"/>
-    </Shell.SearchHandler>
+    </Shell.SearchHandler>-->
 
     <StackLayout>
         <ScrollView>

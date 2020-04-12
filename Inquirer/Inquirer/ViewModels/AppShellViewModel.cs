@@ -1,5 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Security.Authentication;
+using System.Threading.Tasks;
 using InquirerForAndroid.Models;
+using Xamarin.Forms;
 
 namespace InquirerForAndroid.ViewModels
 {
@@ -7,13 +11,29 @@ namespace InquirerForAndroid.ViewModels
     {
         public AppShellViewModel()
         {
-            MenuItems = new ObservableCollection<MenuItemInfo>()
-            {
-                new MenuItemInfo() { Text = "menu item 1"},
-                new MenuItemInfo() { Text = "menu item 2"},
-                new MenuItemInfo() { Text = "menu item 3"},
-            };
+            GotToPageCommand = new Command(GotToPageMethod);
+            Auth();
         }
-        public ObservableCollection<MenuItemInfo> MenuItems { get; set; }
+
+        private void GotToPageMethod(object viewModel)
+        {
+            AppShell.GoToPage((ViewModelBase) viewModel);
+        }
+
+        public Command GotToPageCommand { get; }
+
+        public async Task Auth()
+        {
+            try
+            {
+                await DataStore.Auth("");
+            }
+            catch (AuthenticationException)
+            { }
+            catch (Exception ex)
+            {
+                ErrorMessage = ex.Message;
+            }
+        }
     }
 }

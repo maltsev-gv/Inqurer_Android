@@ -1,5 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using Android.Content;
 using Xamarin.Forms;
+using Application = Android.App.Application;
+
+//using Xamarin.Forms;
 
 namespace InquirerForAndroid.Views
 {
@@ -12,8 +17,7 @@ namespace InquirerForAndroid.Views
         {
             InitializeComponent();
             Globals.ActivePage = this;
-            Shell.SetFlyoutBehavior(this, FlyoutBehavior.Flyout);
+            //Shell.SetFlyoutBehavior(this, FlyoutBehavior.Flyout);
         }
-
     }
 }

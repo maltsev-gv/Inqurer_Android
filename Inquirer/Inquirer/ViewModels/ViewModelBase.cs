@@ -11,9 +11,14 @@ namespace InquirerForAndroid.ViewModels
     {
         public ViewModelBase()
         {
-            Globals.ActivePageChanged += () => { RaisePropertyChanged(nameof(HalfWidth)); };
+            Globals.ActivePageChanged += () =>
+            {
+                RaisePropertyChanged(nameof(HalfWidth));
+                RaisePropertyChanged(nameof(QuarterWidth));
+            };
         }
         public IDataStore DataStore => DependencyService.Get<IDataStore>();
+        public IDeviceService DeviceService => DependencyService.Get<IDeviceService>();
 
         public bool IsRefreshing
         {
@@ -21,7 +26,7 @@ namespace InquirerForAndroid.ViewModels
             set => SetVal(value);
         }
 
-        public virtual string Title
+        public string Title
         {
             get => GetVal<string>();
             set => SetVal(value);
@@ -36,11 +41,12 @@ namespace InquirerForAndroid.ViewModels
                 SetVal(value);
                 if (!value.IsNullOrEmpty())
                 {
-                    // LauncherPage.Alert("Ошибка", value, null, "Закрыть");
+                    AppShell.Alert("Ошибка", value, null, "Закрыть");
                 }
             }
         }
 
         public double HalfWidth => DeviceDisplay.MainDisplayInfo.Width / 4;
+        public double QuarterWidth => DeviceDisplay.MainDisplayInfo.Width / 8;
     }
 }

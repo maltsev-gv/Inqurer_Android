@@ -14,7 +14,7 @@ namespace InquirerForAndroid.ViewModels
 
         private async void AuthMethod()
         {
-            var user = DataStore.Auth(Login, Password, "");
+            var user = await DataStore.Auth(PersonnelNumber);
             if (user == null)
             {
                 await AppShell.Alert("Вход не удался",
@@ -28,13 +28,7 @@ namespace InquirerForAndroid.ViewModels
 
         }
 
-        public string Login
-        {
-            get => GetVal<string>();
-            set => SetVal(value);
-        }
-
-        public string Password
+        public string PersonnelNumber
         {
             get => GetVal<string>();
             set => SetVal(value);

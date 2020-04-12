@@ -8,7 +8,9 @@
              xmlns:viewmodels="clr-namespace:InquirerForAndroid.ViewModels"
              mc:Ignorable="d"
              x:Class="InquirerForAndroid.Views.AuthPage"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             >
+    <Shell.FlyoutBehavior>Flyout</Shell.FlyoutBehavior>
     <ContentPage.BindingContext>
         <viewmodels:AuthViewModel/>
     </ContentPage.BindingContext>
@@ -23,9 +25,7 @@
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Text="Опросник" FontSize="36" FontAttributes="Italic,Bold" Margin="0,20" HorizontalOptions="Center" TextColor="Black"/>
 
-            <userControls:GrayEntry Grid.Row="1" Text="{Binding Login}" Prompt="Имя пользователя"/>
-
-            <userControls:GrayEntry Grid.Row="2" Text="{Binding Password}" Prompt="Пароль" IsPassword="True"/>
+            <userControls:GrayEntry Grid.Row="1" Text="{Binding PersonnelNumber}" Prompt="Табельный номер"/>
 
             <Button Grid.Row="3" Text="Авторизация" Margin="0,20" Command="{Binding AuthCommand}"/>
         </Grid>

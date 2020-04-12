@@ -12,7 +12,22 @@ namespace InquirerForAndroid.Views
         {
             InitializeComponent();
             Globals.ActivePage = this;
-            Shell.SetFlyoutBehavior(this, FlyoutBehavior.Flyout);
+            Shell.Current.FlyoutIsPresented = true;
+
+            Shell.SetBackButtonBehavior(this, new BackButtonBehavior
+            {
+                IconOverride = "About.png",
+                IsEnabled = false,
+                Command = new Command(() =>
+                {
+                    for (var index = 0; index < Shell.Current.Navigation.NavigationStack.Count; index++)
+                    {
+                        Shell.Current.Navigation.PopAsync();
+                    }
+
+                })
+            });
+            //Shell.SetFlyoutBehavior(this, FlyoutBehavior.Flyout);
         }
 
     }
