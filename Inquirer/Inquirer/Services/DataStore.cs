@@ -121,7 +121,7 @@ namespace InquirerForAndroid.Services
             var responseHeaders = new Dictionary<string, string>();
             byte[] bytes = null;
 
-            var postResult = await RequestServiceHelper.Get($"{Globals.BaseUrl}/GetApkZipped", _headers,
+            var postResult = await RequestServiceHelper.Get($"{Globals.BaseUrl}/GetApkZipped/{apkId}", _headers,
                 progressChangedAction);
             if (postResult.IsSuccess)
             {
