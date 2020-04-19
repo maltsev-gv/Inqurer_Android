@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace InquirerForAndroid
             var typeName = viewModel.GetType().Name;
             var match = _viewModelRegex.Match(typeName);
             if (!match.Success)
-            { 
+            {
                 throw new ArgumentException($"{nameof(GoToPage)}: invalid view model: {viewModel}");
             }
 
@@ -112,15 +113,49 @@ namespace InquirerForAndroid
 
         private async void MenuItem_OnClicked(object sender, EventArgs e)
         {
-            var route = Routing.GetRoute((BindableObject) sender);
+            var route = Routing.GetRoute((BindableObject)sender);
             await Current.GoToAsync(route);
         }
 
         private async void Button_OnClicked(object sender, EventArgs e)
         {
-            var menuItem = ((Element) sender).GetParentOfType<MenuItem>();
-             var route = Routing.GetRoute(menuItem);
+            var menuItem = ((Element)sender).GetParentOfType<MenuItem>();
+            var route = Routing.GetRoute(menuItem);
             await Current.GoToAsync(route);
+        }
+
+        private void SurveyTab_OnAppearing(object sender, EventArgs e)
+        {
+            var tab = (Tab)sender;
+
+            var page = tab.Items[0].Content;
+            if (Globals.CurrentUser == null)
+            {
+                tab.Items[0] = new ShellContent()
+                {
+                    Content = new AuthPage()
+                };
+            }
+        }
+
+        private void NewsTab_OnAppearing(object sender, EventArgs e)
+        {
+            var tab = (Tab)sender;
+            tab.Items[0] = new ShellContent()
+            {
+                Content = new NewsPage(NewsPage.NewsViewModel != null)
+            };
+            //var vm = NewsPage.NewsViewModel;
+            //if (vm != null)
+            //{
+            //    tab.Items[0] = new ShellContent()
+            //    {
+            //        Content = new NewsPage()
+            //        {
+            //            BindingContext = vm
+            //        }
+            //    };
+            //}
         }
     }
 }

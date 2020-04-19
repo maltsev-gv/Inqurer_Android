@@ -12,7 +12,7 @@ namespace InquirerForAndroid.Views
         {
             InitializeComponent();
             Globals.ActivePage = this;
-            Shell.Current.FlyoutIsPresented = true;
+            //Shell.Current.FlyoutIsPresented = true;
 
             Shell.SetBackButtonBehavior(this, new BackButtonBehavior
             {

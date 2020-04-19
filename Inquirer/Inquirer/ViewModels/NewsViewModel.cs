@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Input;
 using InquirerForAndroid.Models;
 using Rcn.Common;

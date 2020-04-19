@@ -12,8 +12,16 @@
              x:Class="InquirerForAndroid.Views.NewsPage"
              Title="{Binding Title}"
              x:Name="newsPage"
+             Appearing="NewsPage_OnAppearing"
+             LayoutChanged="NewsPage_OnLayoutChanged"
+             MeasureInvalidated="NewsPage_OnMeasureInvalidated"
+             Disappearing="NewsPage_OnDisappearing"
+             BindingContextChanged="NewsPage_OnBindingContextChanged"
              >
     <Shell.FlyoutBehavior>Flyout</Shell.FlyoutBehavior>
+    <Shell.BackgroundColor>
+        <x:StaticResource>NavigationPrimary</x:StaticResource>
+    </Shell.BackgroundColor>
 
     <ContentPage.BindingContext>
         <viewmodels:NewsViewModel/>
@@ -68,17 +76,28 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="1" Text="Секундочку, идёт загрузка..." VerticalOptions="Center" HorizontalOptions="Center" FontSize="20"
+        <Label x:Name="labelWelcome" Grid.Row="1" Text="Секундочку, идёт загрузка..." VerticalOptions="Center" HorizontalOptions="Center" FontSize="20"
                IsVisible="{Binding NewsBlocks, Converter={converters:EnumerableToBoolConverter}, ConverterParameter=r}"/>
 
-        <ListView x:Name="listView" Grid.Row="1" ItemsSource="{Binding NewsBlocks}" ItemTemplate="{StaticResource newsTemplate}"
+        <ListView x:Name="listView" Grid.Row="1" 
+                  ItemsSource="{Binding NewsBlocks}" 
+                  ItemTemplate="{StaticResource newsTemplate}"
                   HasUnevenRows="true"
                   RefreshCommand="{Binding LoadNewsCommand}"
                   SelectionMode="None"
                   IsPullToRefreshEnabled="true"
                   IsRefreshing="{Binding IsRefreshing}"
                   CachingStrategy="RecycleElement" 
-                  ItemTapped="ListView_OnItemTapped">
+                  ItemTapped="ListView_OnItemTapped"
+                  ScrollToRequested="ListView_OnScrollToRequested"
+                  Scrolled="ListView_OnScrolled"
+                  BindingContextChanged="ListView_OnBindingContextChanged"
+                  MeasureInvalidated="ListView_OnMeasureInvalidated"
+                  SizeChanged="ListView_OnSizeChanged"
+                  BatchCommitted="ListView_OnBatchCommitted"
+                  
+                  
+                  >
 
         </ListView>
 

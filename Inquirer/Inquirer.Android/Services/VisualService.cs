@@ -1,9 +1,13 @@
-﻿using Android.Graphics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using Android.Graphics;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Inquirer.Droid.Services;
 using InquirerForAndroid.Services;
+using Point = Xamarin.Forms.Point;
 
 [assembly: Xamarin.Forms.Dependency(typeof(VisualService))]
 namespace Inquirer.Droid.Services
@@ -43,5 +47,71 @@ namespace Inquirer.Droid.Services
 
             return _textTypeface;
         }
-	}
+
+        //need to cast the JavaObject to the desired C# class
+        public T Cast<T>(Java.Lang.Object obj) where T : class
+        {
+            var propertyInfo = obj.GetType().GetProperty("Instance");
+            return propertyInfo == null ? null : propertyInfo.GetValue(obj, null) as T;
+        }
+
+        public void ScrollListViewTo(Xamarin.Forms.ListView lv, int x, int y)
+        {
+            Xamarin.Forms.Platform.Android.ListViewRenderer renderer =
+                (Xamarin.Forms.Platform.Android.ListViewRenderer)Xamarin.Forms.Platform.Android.Platform.GetRenderer(lv);
+
+            ListView nativeListView = renderer.Control;
+            nativeListView.ScrollTo(x, y);
+        }
+
+        public void SignToListViewScrollEvent(Xamarin.Forms.ListView lv, Action<Point> OnScrollMethod)
+        {
+            Xamarin.Forms.Platform.Android.ListViewRenderer renderer =
+                (Xamarin.Forms.Platform.Android.ListViewRenderer)Xamarin.Forms.Platform.Android.Platform.GetRenderer(lv);
+
+            ListView nativeListView = renderer.Control;
+            nativeListView.ScrollChange += (s, e) => 
+                {
+                    OnScrollMethod?.Invoke(new Point()
+                    {
+                        X = e.ScrollX,
+                        Y = e.ScrollY,
+                    });
+            };
+        }
+
+        public List<T> GetListViewVisibleItems<T>(Xamarin.Forms.ListView lv) where T : class
+        {
+            List<T> visibleItems = new List<T>();
+
+            Xamarin.Forms.Platform.Android.ListViewRenderer renderer =
+                (Xamarin.Forms.Platform.Android.ListViewRenderer)Xamarin.Forms.Platform.Android.Platform.GetRenderer(lv);
+
+            ListView nativeListView = renderer.Control;
+
+            for (int i = 0; i < nativeListView.ChildCount; i++)
+            {
+                View view = nativeListView.GetChildAt(i);
+
+                if (view.Visibility != ViewStates.Visible)
+                    continue;
+
+                int pos = nativeListView.GetPositionForView(view);
+
+                if (pos < 0 || pos == AdapterView.InvalidPosition || pos >= nativeListView.Adapter.Count)
+                    continue;
+
+                var obj = nativeListView.Adapter.GetItem(pos);
+
+                if (obj == null)
+                    continue;
+
+                T visibleElement = Cast<T>(obj);
+
+                if (visibleElement != null && !visibleItems.Contains(visibleElement))
+                    visibleItems.Add(visibleElement);
+            }
+            return visibleItems;
+        }
+    }
 }

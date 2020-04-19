@@ -1,4 +1,5 @@
-﻿using Rcn.Interfaces.Inquirer;
+﻿using System;
+using Rcn.Interfaces.Inquirer;
 
 namespace InquirerForAndroid.Models
 {
@@ -9,5 +10,7 @@ namespace InquirerForAndroid.Models
         public IBlockInfo FirstBlock { get; set; }
         public GlobalSurveyStatuses GlobalStatus { get; set; }
         public UserSurveyStatuses UserStatus { get; set; }
+        public DateTime EndsAt { get; set; }
+        public DateTime ProcessedAt { get; set; }
     }
 }

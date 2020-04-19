@@ -31,6 +31,12 @@ namespace InquirerForAndroid
             }
         }
 
+        public static EnterpriseInfo CurrentEnterprise
+        {
+            get => _currentEnterprise;
+            set => _currentEnterprise = value;
+        }
+
         public static ViewModelBase CurrentViewModel { get; set; }
 
         public static Action ActivePageChanged;
@@ -38,5 +44,6 @@ namespace InquirerForAndroid
 
         private static UserInfo _currentUser;
         private static Page _activePage;
+        private static EnterpriseInfo _currentEnterprise;
     }
 }

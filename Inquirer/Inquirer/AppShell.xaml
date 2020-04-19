@@ -6,6 +6,7 @@
        mc:Ignorable="d"
        xmlns:local="clr-namespace:InquirerForAndroid.Views"
        xmlns:viewModels="clr-namespace:InquirerForAndroid.ViewModels;assembly=InquirerForAndroid"
+       xmlns:userControls="clr-namespace:InquirerForAndroid.UserControls;assembly=InquirerForAndroid"
        Title="Inquirer"
        x:Class="InquirerForAndroid.AppShell" SizeChanged="AppShell_OnSizeChanged">
 
@@ -46,13 +47,11 @@
     <MenuItem Text="333" />
 
     <TabBar >
-        <Tab Title="Новости" Icon="tab_about.png">
-            <ShellContent Title="1st"
-                          ContentTemplate="{DataTemplate local:NewsPage}" >
-            </ShellContent>
+        <Tab Title="Новости" Icon="tab_about.png" Appearing="NewsTab_OnAppearing">
+            <ShellContent ContentTemplate="{DataTemplate local:NewsPage}"/>
         </Tab>
-        <Tab Title="Авторизация" Icon="tab_feed.png">
-            <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" Route="AuthPage"/>
+        <Tab Title="Опросы" Icon="tab_feed.png" Appearing="SurveyTab_OnAppearing">
+            <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" />
         </Tab>
     </TabBar>
 
@@ -60,6 +59,7 @@
         <Tab Title="Авторизация" Icon="tab_feed.png">
             <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" />
         </Tab>
+    Appearing="SurveyTab_OnAppearing"
         <Tab Title="Регистрация" Icon="tab_about.png">
             <ShellContent Title="1st"
                           ContentTemplate="{DataTemplate local:RegistrationPage}" />
