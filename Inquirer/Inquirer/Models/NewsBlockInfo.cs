@@ -15,15 +15,22 @@ namespace InquirerForAndroid.Models
         public DateTime CreatedDate { get; set; }
 
         public string CreatedDateStr => CreatedDate.ToString(ConstantsCommon.DateAndTimeFormat);
+
+        public Action<NewsBlockInfo> CanBeExpandedCalculated;
         public bool CanBeExpanded
         {
             get => GetVal<bool>();
-            set => SetVal(value, RaiseAll);
+            set => SetVal(value, () =>
+            {
+                CanBeExpandedCalculated?.Invoke(this);
+                RaiseAll();
+            });
         }
 
         public bool IsNeedToCollapse => CanBeExpanded && IsExpanded;
         public bool IsNeedToExpand => CanBeExpanded && !IsExpanded;
 
+        [InitialValue(true)]
         public bool IsExpanded
         {
             get => GetVal<bool>();

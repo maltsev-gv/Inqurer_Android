@@ -7,16 +7,12 @@
              xmlns:userControls="clr-namespace:InquirerForAndroid.UserControls;assembly=InquirerForAndroid"
              xmlns:viewmodels="clr-namespace:InquirerForAndroid.ViewModels"
              xmlns:models="clr-namespace:InquirerForAndroid.Models;assembly=InquirerForAndroid"
-             xmlns:converters1="clr-namespace:XMobileGarage.Converters;assembly=InquirerForAndroid"
              mc:Ignorable="d"
              x:Class="InquirerForAndroid.Views.NewsPage"
              Title="{Binding Title}"
              x:Name="newsPage"
              Appearing="NewsPage_OnAppearing"
-             LayoutChanged="NewsPage_OnLayoutChanged"
              MeasureInvalidated="NewsPage_OnMeasureInvalidated"
-             Disappearing="NewsPage_OnDisappearing"
-             BindingContextChanged="NewsPage_OnBindingContextChanged"
              >
     <Shell.FlyoutBehavior>Flyout</Shell.FlyoutBehavior>
     <Shell.BackgroundColor>
@@ -38,7 +34,8 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
@@ -58,13 +55,16 @@
                             </Image.Style>
                         </Image>
                     </StackLayout>
-                    <Label Grid.Row="1" Text="{Binding Text}" HorizontalOptions="Fill" LineHeight="1.2" 
+                    <Label Grid.Row="1" Text="{Binding Text}" HorizontalOptions="Fill" LineHeight="1.4" HeightRequest="200"
+                           IsVisible="{Binding IsExpanded, Converter={converters:ReverseBoolConverter}}" 
                            BindingContextChanged="LabelText_OnBindingContextChanged"/>
-                    <Label Grid.Row="2" Text="Читать далее" HorizontalOptions="Start" TextColor="DodgerBlue" LineHeight="1.2" 
+                    <Label Grid.Row="2" Text="{Binding Text}" HorizontalOptions="Fill" LineHeight="1.4" 
+                           IsVisible="{Binding IsExpanded}"/>
+                    <Label Grid.Row="3" Text="Читать далее" HorizontalOptions="Start" TextColor="DodgerBlue" LineHeight="1.2" 
                            IsVisible="{Binding IsNeedToExpand}"/>
-                    <Label Grid.Row="2" Text="Свернуть" HorizontalOptions="Start" TextColor="DodgerBlue" LineHeight="1.2" 
+                    <Label Grid.Row="3" Text="Свернуть" HorizontalOptions="Start" TextColor="DodgerBlue" LineHeight="1.2" 
                            IsVisible="{Binding IsNeedToCollapse}"/>
-                    <Label Grid.Row="3" Text="{Binding CreatedDateStr}" HorizontalOptions="End" TextColor="DarkGray"/>
+                    <Label Grid.Row="4" Text="{Binding CreatedDateStr}" HorizontalOptions="End" TextColor="DarkGray"/>
                 </Grid>
             </ViewCell>
         </DataTemplate>
@@ -89,32 +89,9 @@
                   IsRefreshing="{Binding IsRefreshing}"
                   CachingStrategy="RecycleElement" 
                   ItemTapped="ListView_OnItemTapped"
-                  ScrollToRequested="ListView_OnScrollToRequested"
                   Scrolled="ListView_OnScrolled"
-                  BindingContextChanged="ListView_OnBindingContextChanged"
-                  MeasureInvalidated="ListView_OnMeasureInvalidated"
-                  SizeChanged="ListView_OnSizeChanged"
-                  BatchCommitted="ListView_OnBatchCommitted"
-                  
-                  
                   >
 
         </ListView>
-
-        <!--<ScrollView Grid.Row="1">
-        <Grid HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="{Binding HalfWidth}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Text="Опросник" FontSize="36" FontAttributes="Italic,Bold" Margin="0,20" HorizontalOptions="Center" TextColor="Black"/>
-
-            <userControls:GrayEntry Grid.Row="1" Text="{Binding PersonnelNumber}" Prompt="Табельный номер"/>
-
-            <Button Grid.Row="3" Text="Авторизация" Margin="0,20" Command="{Binding AuthCommand}"/>
-        </Grid>
-    </ScrollView>-->
     </Grid>
 </ContentPage>

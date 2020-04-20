@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Input;
 using InquirerForAndroid.Models;
 using Rcn.Common;
+using Rcn.Common.ExtensionMethods;
 using Xamarin.Forms;
 
 namespace InquirerForAndroid.ViewModels
@@ -17,17 +20,24 @@ namespace InquirerForAndroid.ViewModels
             LoadNewsCommand.Execute(null);
         }
 
+        private Dictionary<int, bool> _expandedNews = new Dictionary<int, bool>();
+
         private async void LoadNewsMethod()
         {
             try
             {
+                if (NewsBlocks?.Count > 0)
+                {
+                    _expandedNews = NewsBlocks.ToDictionary(nb => nb.NewsBlockId, nb => nb.IsExpanded);
+                }
+
                 var news = await DataStore.GetNews(true);
                 if (news == null)
                 {
                     return;
                 }
                 NewsBlocks = new ObservableCollection<NewsBlockInfo>(news);
-                NewsBlocksChanged?.Invoke();
+                NewsBlocks.ForEach(nb => nb.CanBeExpandedCalculated = CanBeExpandedCalculated);
             }
             catch (Exception ex)
             {
@@ -39,9 +49,19 @@ namespace InquirerForAndroid.ViewModels
             }
         }
 
-        public ICommand LoadNewsCommand { get; set; }
+        private void CanBeExpandedCalculated(NewsBlockInfo info)
+        {
+            if (!info.CanBeExpanded)
+            {
+                info.IsExpanded = true; // у малых блоков ставим автовысоту 
+                return;
+            }
 
-        public Action NewsBlocksChanged;
+            // по умолчанию сворачиваем новые крупные блоки новостей. Если блок был ранее свернут/развернут - восстанавливаем его состояние
+            info.IsExpanded = _expandedNews.ContainsKey(info.NewsBlockId) && _expandedNews[info.NewsBlockId];
+        }
+
+        public ICommand LoadNewsCommand { get; set; }
 
         public ObservableCollection<NewsBlockInfo> NewsBlocks
         {

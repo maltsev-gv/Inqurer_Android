@@ -140,11 +140,11 @@ namespace InquirerForAndroid
 
         private void NewsTab_OnAppearing(object sender, EventArgs e)
         {
-            var tab = (Tab)sender;
-            tab.Items[0] = new ShellContent()
-            {
-                Content = new NewsPage(NewsPage.NewsViewModel != null)
-            };
+            //var tab = (Tab)sender;
+            //tab.Items[0] = new ShellContent()
+            //{
+            //    Content = new NewsPage(NewsPage.NewsViewModel != null)
+            //};
             //var vm = NewsPage.NewsViewModel;
             //if (vm != null)
             //{
