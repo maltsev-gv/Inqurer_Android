@@ -86,14 +86,14 @@ namespace InquirerForAndroid
 
         private void OnActivePageChanged()
         {
-            if (Globals.ActivePage is EnterpriseSelectorPage)
-            {
-                Current.Items.Add(CreateMenuItem("Выбор предприятия", new Command(async () =>
-                {
-                    await Current.Navigation.PushAsync(new EnterpriseSelectorPage());
-                    Current.FlyoutIsPresented = false;
-                })));
-            }
+            //if (Globals.ActivePage is EnterpriseSelectorPage)
+            //{
+            //    Current.Items.Add(CreateMenuItem("Выбор предприятия", new Command(async () =>
+            //    {
+            //        await Current.Navigation.PushAsync(new EnterpriseSelectorPage());
+            //        Current.FlyoutIsPresented = false;
+            //    })));
+            //}
         }
 
         //public AppShell()
@@ -107,8 +107,18 @@ namespace InquirerForAndroid
         //    })));
         //    ...
         //}
-        public void RaiseOnBackPressed()
+        public async void RaiseOnBackPressed()
         {
+            if (Current.Navigation.ModalStack.Count > 0)
+            {
+                await Current.Navigation.PopModalAsync();
+                return;
+            }
+            if (Current.Navigation.NavigationStack.Count > 1)
+            {
+                await Current.Navigation.PopAsync();
+                return;
+            }
         }
 
         private async void MenuItem_OnClicked(object sender, EventArgs e)
@@ -135,6 +145,16 @@ namespace InquirerForAndroid
                 {
                     Content = new AuthPage()
                 };
+                return;
+            }
+            if (Globals.CurrentEnterprise != null)
+            {
+                GoToPage(new EnterpriseSelectorViewModel());
+                //tab.Items[0] = new ShellContent()
+                //{
+                //    Content = new EnterpriseSelectorPage()
+                //};
+                return;
             }
         }
 

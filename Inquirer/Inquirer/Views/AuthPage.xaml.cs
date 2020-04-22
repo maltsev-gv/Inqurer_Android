@@ -12,7 +12,7 @@ namespace InquirerForAndroid.Views
         {
             InitializeComponent();
             Globals.ActivePage = this;
-            Shell.SetFlyoutBehavior(this, FlyoutBehavior.Flyout);
+            //Shell.SetFlyoutBehavior(this, FlyoutBehavior.Flyout);
         }
 
     }

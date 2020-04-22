@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Input;
 using InquirerForAndroid.Models;
-using Rcn.Common;
 using Rcn.Common.ExtensionMethods;
 using Xamarin.Forms;
 
@@ -51,6 +50,7 @@ namespace InquirerForAndroid.ViewModels
 
         private void CanBeExpandedCalculated(NewsBlockInfo info)
         {
+            Debug.WriteLine($"CanBeExpandedCalculated");
             if (!info.CanBeExpanded)
             {
                 info.IsExpanded = true; // у малых блоков ставим автовысоту 
@@ -59,6 +59,7 @@ namespace InquirerForAndroid.ViewModels
 
             // по умолчанию сворачиваем новые крупные блоки новостей. Если блок был ранее свернут/развернут - восстанавливаем его состояние
             info.IsExpanded = _expandedNews.ContainsKey(info.NewsBlockId) && _expandedNews[info.NewsBlockId];
+            Debug.WriteLine($"CanBeExpandedCalculated - finish");
         }
 
         public ICommand LoadNewsCommand { get; set; }

@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using InquirerForAndroid.Models;
 using Rcn.Interfaces.Inquirer;
+using Xamarin.Forms;
 
 namespace InquirerForAndroid.ViewModels
 {
     public class EnterpriseSelectorViewModel : ViewModelBase
     {
+        public EnterpriseSelectorViewModel()
+        {
+        }
+
         public List<EnterpriseInfo> Enterprises
         {
             get => GetVal<List<EnterpriseInfo>>();

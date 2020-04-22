@@ -11,6 +11,10 @@
              Title="{Binding Title}"
              >
     <Shell.FlyoutBehavior>Flyout</Shell.FlyoutBehavior>
+    <Shell.BackgroundColor>
+        <x:StaticResource>NavigationPrimary</x:StaticResource>
+    </Shell.BackgroundColor>
+
     <ContentPage.BindingContext>
         <viewmodels:AuthViewModel/>
     </ContentPage.BindingContext>

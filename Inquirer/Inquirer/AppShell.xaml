@@ -34,9 +34,9 @@
         <viewModels:AppShellViewModel/>
     </Shell.BindingContext>
 
-    <!--<Shell.FlyoutBehavior>Disabled</Shell.FlyoutBehavior>-->
+    <Shell.FlyoutBehavior>Disabled</Shell.FlyoutBehavior>
 
-    <MenuItem Text="Лаунчер" 
+    <!--<MenuItem Text="Лаунчер" 
               IconImageSource="tab_feed.png"
               Command="{Binding GotToPageCommand}">
         <MenuItem.CommandParameter>
@@ -44,13 +44,13 @@
         </MenuItem.CommandParameter>
     </MenuItem>
     <MenuItem Text="222" />
-    <MenuItem Text="333" />
+    <MenuItem Text="333" />-->
 
     <TabBar >
         <Tab Title="Новости" Icon="tab_about.png" Appearing="NewsTab_OnAppearing">
             <ShellContent ContentTemplate="{DataTemplate local:NewsPage}"/>
         </Tab>
-        <Tab Title="Опросы" Icon="tab_feed.png" Appearing="SurveyTab_OnAppearing">
+        <Tab x:Name="surveyTab" Title="Опросы" Icon="tab_feed.png" Appearing="SurveyTab_OnAppearing">
             <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" />
         </Tab>
     </TabBar>

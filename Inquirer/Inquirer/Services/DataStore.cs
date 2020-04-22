@@ -7,15 +7,13 @@ using System.Linq;
 using System.Net;
 using System.Security.Authentication;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using InquirerForAndroid.Models;
 using InquirerForAndroid.Services;
-using Rcn.Common;
 using Rcn.Common.Exceptions;
 using Rcn.Common.ExtensionMethods;
 using Rcn.Common.Helpers;
-using Rcn.Interfaces.Inquirer;
+using Rcn.Interfaces;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(DataStore))]
@@ -87,7 +85,7 @@ namespace InquirerForAndroid.Services
                     var postResult = await RequestServiceHelper.Post($"{Globals.BaseUrl}/{methodName}", model ?? new object(), _headers);
                     if (postResult.IsSuccess)
                     {
-                        var resList = ZippedJsonHelper.GetObjectFromZippedString<List<T>>(postResult.Content);
+                        var resList = ZippedJsonHelper.GetObjectFromZippedString<List<T>>(postResult.Content, JsonConverters.AllConverters);
                         list.Clear();
                         resList.ForEach(item => list.Add(item));
                     }
@@ -97,7 +95,7 @@ namespace InquirerForAndroid.Services
                         throw new PreDefinedException(this, "Ошибка при обращении к серверу");
                     }
                 }
-                catch (WebException ex)
+                catch (WebException)
                 {
                     throw new Exception(ConnectionErrorString);
                 }
@@ -111,15 +109,15 @@ namespace InquirerForAndroid.Services
             return await DoRequest<NewsBlockInfo>("NewsBlocks", null, forceRefresh);
         }
 
-        private Regex _fileNameRegex = new Regex("filename=(.*);");
+        private readonly Regex _fileNameRegex = new Regex("filename=(.*);");
         public int UnpackTime { get; set; }
 
         public async Task<string> GetApk(int apkId, Action<double> progressChangedAction = null)
         {
             UnpackTime = 0;
             DurationHelper.InitTiming("GetApk");
-            var responseHeaders = new Dictionary<string, string>();
-            byte[] bytes = null;
+            Dictionary<string, string> responseHeaders;
+            byte[] bytes;
 
             var postResult = await RequestServiceHelper.Get($"{Globals.BaseUrl}/GetApkZipped/{apkId}", _headers,
                 progressChangedAction);

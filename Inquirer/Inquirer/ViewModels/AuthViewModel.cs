@@ -18,7 +18,7 @@ namespace InquirerForAndroid.ViewModels
             if (user == null)
             {
                 await AppShell.Alert("Вход не удался",
-                    "Введен неверный PIN-код, либо данный PIN-код уже не действителен.",
+                    "Введен неверный либо несуществующий табельный номер.",
                     null, "ОК");
                 return;
             }

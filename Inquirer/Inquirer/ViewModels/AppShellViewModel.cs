@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Security.Authentication;
 using System.Threading.Tasks;
 using InquirerForAndroid.Models;
+using InquirerForAndroid.Services;
 using Xamarin.Forms;
 
 namespace InquirerForAndroid.ViewModels
@@ -26,10 +28,16 @@ namespace InquirerForAndroid.ViewModels
         {
             try
             {
-                await DataStore.Auth("");
+               var user = await DataStore.Auth("");
+                if (user != null)
+                {
+                    var enterprises = await DataStore.GetEnterprises(true);
+                    Globals.CurrentEnterprise = enterprises.GetEnterprisesByFilter(null, true).FirstOrDefault();
+                }
             }
             catch (AuthenticationException)
-            { }
+            { 
+            }
             catch (Exception ex)
             {
                 ErrorMessage = ex.Message;

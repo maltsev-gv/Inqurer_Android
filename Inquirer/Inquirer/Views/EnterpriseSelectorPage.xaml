@@ -9,9 +9,10 @@
              xmlns:subComponents="clr-namespace:InquirerForAndroid.ViewModels.SubComponents;assembly=InquirerForAndroid"
              mc:Ignorable="d"
              x:Class="InquirerForAndroid.Views.EnterpriseSelectorPage"
+             x:Name="enterpriseSelectorPage"
              Title="{Binding Title}">
     <ContentPage.BindingContext>
-        <viewmodels:RegistrationViewModel/>
+        <viewmodels:EnterpriseSelectorViewModel/>
     </ContentPage.BindingContext>
 
     <!--<Shell.BackButtonBehavior>
