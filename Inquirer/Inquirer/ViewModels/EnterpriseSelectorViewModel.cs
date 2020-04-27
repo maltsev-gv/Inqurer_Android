@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using InquirerForAndroid.Models;
+using InquirerForAndroid.Services;
+using Rcn.Common.ExtensionMethods;
 using Rcn.Interfaces.Inquirer;
 using Xamarin.Forms;
 
@@ -14,6 +18,38 @@ namespace InquirerForAndroid.ViewModels
     {
         public EnterpriseSelectorViewModel()
         {
+            //GoToAuth();
+            Debug.WriteLine($"EnterpriseSelectorViewModel: ctor");
+            Title = "Выбор предприятия";
+            LoadEnterprisesCommand = new Command(async isForced => await LoadItemsMethod(isForced as bool? ?? true));
+            ExpandItemCommand = new Command(ExpandItemMethod);
+            EnterpriseSelectedCommand = new Command(EnterpriseSelectedMethod);
+            LoadEnterprisesCommand.Execute(false);
+        }
+
+        private void EnterpriseSelectedMethod(object obj)
+        {
+            var info = (EnterpriseInfo) obj;
+            Globals.CurrentEnterpriseId = info.EnterpriseId;
+            AppShell.GoToPage(viewModel: new SurveySelectorViewModel(info));
+        }
+
+        private void ExpandItemMethod(object obj)
+        {
+            var info = (EnterpriseInfo)obj;
+            var isChildrenVisible = !info.IsExpanded;
+            info.Children.ForEach(ei => ((EnterpriseInfo)ei).IsVisible = isChildrenVisible);
+            info.RaiseAll();
+            SaveEnterprisesVisibility();
+        }
+
+        public ICommand LoadEnterprisesCommand { get; set; }
+        public ICommand ExpandItemCommand { get; set; }
+        public ICommand EnterpriseSelectedCommand { get; set; }
+
+        private void GoToAuth()
+        {
+            AppShell.GoToPage(new AuthViewModel());
         }
 
         public List<EnterpriseInfo> Enterprises
@@ -22,7 +58,28 @@ namespace InquirerForAndroid.ViewModels
             set => SetVal(value);
         }
 
-        public async Task LoadItemsMethod(bool forceRefresh = true)
+        public string FilterText
+        {
+            get => GetVal<string>();
+            set
+            {
+                SetVal(value);
+                if (!value.IsNullOrEmpty())
+                {
+                    var lowerText = value.ToLower();
+                    Enterprises.ForEach(ei => ei.IsVisible = ei.Name.ToLower().Contains(lowerText) || ei.ShortName.ToLower().Contains(lowerText));
+                }
+                else
+                {
+                    RestoreEnterprisesVisibility();
+                }
+            }
+        }
+
+        private List<EnterpriseInfo> _rawEnterprises;
+        private static Dictionary<int, bool> _visibleEnterprises = new Dictionary<int, bool>();
+
+        public async Task LoadItemsMethod(bool forceRefresh)
         {
             if (IsRefreshing)
             {
@@ -33,8 +90,10 @@ namespace InquirerForAndroid.ViewModels
 
             try
             {
-                Enterprises.Clear();
-                Enterprises = await DataStore.GetEnterprises(forceRefresh);
+                SaveEnterprisesVisibility();
+                _rawEnterprises = await DataStore.GetEnterprises(forceRefresh);
+                Enterprises = _rawEnterprises.GetFlatEnterprisesList();
+                RestoreEnterprisesVisibility();
             }
             catch (Exception ex)
             {
@@ -49,6 +108,24 @@ namespace InquirerForAndroid.ViewModels
                 IsRefreshing = false;
                 //RaisePropertyChanged(nameof(IsNoDocumentsPresent));
             }
+        }
+
+        private void SaveEnterprisesVisibility()
+        {
+            _visibleEnterprises = Enterprises?.ToDictionary(e => e.EnterpriseId, e => e.IsVisible)
+                                  ?? new Dictionary<int, bool>();
+        }
+
+        private void RestoreEnterprisesVisibility()
+        {
+            Enterprises.ForEach(e =>
+            {
+                if (_visibleEnterprises.ContainsKey(e.EnterpriseId))
+                {
+                    e.IsVisible = _visibleEnterprises[e.EnterpriseId];
+                }
+            });
+            Enterprises.Where(ei => ei.Parent == null).ForEach(ei => ei.IsVisible = true);
         }
     }
 }

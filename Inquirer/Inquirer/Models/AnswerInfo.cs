@@ -9,5 +9,6 @@ namespace InquirerForAndroid.Models
         public int EnterpriseId { get; set; }
         public List<string> Answers { get; set; }
         public int QuestionId { get; set; }
+        public int SurveyId { get; set; }
     }
 }

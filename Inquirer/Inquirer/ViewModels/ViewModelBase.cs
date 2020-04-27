@@ -15,6 +15,7 @@ namespace InquirerForAndroid.ViewModels
             {
                 RaisePropertyChanged(nameof(HalfWidth));
                 RaisePropertyChanged(nameof(QuarterWidth));
+                RaisePropertyChanged(nameof(Title));
             };
         }
         public IDataStore DataStore => DependencyService.Get<IDataStore>();
@@ -26,10 +27,22 @@ namespace InquirerForAndroid.ViewModels
             set => SetVal(value);
         }
 
+        private static string _globalTitle = "";
+
         public string Title
         {
-            get => GetVal<string>();
-            set => SetVal(value);
+            get => _globalTitle;
+            set
+            {
+                _globalTitle = value;
+                RaisePropertyChanged(nameof(Title));
+            }
+        }
+
+        public void RefreshTitle()
+        {
+            RaisePropertyChanged(nameof(Title));
+
         }
 
         public string ErrorMessage

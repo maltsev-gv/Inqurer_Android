@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using InquirerForAndroid.ViewModels;
 using Xamarin.Forms;
 
 namespace InquirerForAndroid.Views
@@ -10,10 +13,9 @@ namespace InquirerForAndroid.Views
     {
         public AuthPage()
         {
-            InitializeComponent();
+            Debug.WriteLine(" ctor AuthPage");
             Globals.ActivePage = this;
-            //Shell.SetFlyoutBehavior(this, FlyoutBehavior.Flyout);
+            InitializeComponent();
         }
-
     }
 }

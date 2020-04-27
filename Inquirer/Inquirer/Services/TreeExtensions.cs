@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using InquirerForAndroid.Models;
 using Rcn.Common.ExtensionMethods;
@@ -34,16 +35,26 @@ namespace InquirerForAndroid.Services
             return result;
         }
 
-        private static void FindEnterprises(List<EnterpriseInfo> enterprises, string namePattern, bool? isDefault, List<EnterpriseInfo> result)
+        public static List<EnterpriseInfo> GetFlatEnterprisesList(this List<EnterpriseInfo> rawEnterprises)
+        {
+            var result = new List<EnterpriseInfo>();
+            FindEnterprises(rawEnterprises, "", null, result);
+            return result;
+        }
+
+        private static void FindEnterprises(List<EnterpriseInfo> enterprises, string namePattern, bool? isDefault, List<EnterpriseInfo> result, EnterpriseInfo parent = null)
         {
             foreach (var enterpriseInfo in enterprises)
             {
                 if (namePattern != "" && enterpriseInfo.Name.ToLower().Contains(namePattern) 
-                    || isDefault != null && enterpriseInfo.IsDefault == isDefault)
+                    || isDefault != null && enterpriseInfo.IsDefault == isDefault
+                    || namePattern == string.Empty && isDefault == null)
                 {
                     result.Add(enterpriseInfo);
+                    enterpriseInfo.Parent = parent;
+                    enterpriseInfo.IsVisible = parent == null;
                 }
-                FindEnterprises(enterpriseInfo.Children.OfType<EnterpriseInfo>().ToList(), namePattern, isDefault, result);
+                FindEnterprises(enterpriseInfo.Children.OfType<EnterpriseInfo>().ToList(), namePattern, isDefault, result, enterpriseInfo);
             }
         }
     }

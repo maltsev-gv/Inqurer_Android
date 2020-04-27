@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using InquirerForAndroid.Models;
 using InquirerForAndroid.ViewModels;
@@ -17,8 +18,17 @@ namespace InquirerForAndroid
             set
             {
                 _activePage = value;
+                _activePage.Appearing -= OnAppearing;
+                _activePage.Appearing += OnAppearing;
                 ActivePageChanged?.Invoke();
             }
+        }
+
+        private static void OnAppearing(object sender, EventArgs e)
+        {
+            var vm = (ViewModelBase) _activePage.BindingContext;
+            Debug.WriteLine($"OnAppearing: {vm.GetType().Name} - {vm.Title}");
+            ((ViewModelBase) _activePage.BindingContext).RefreshTitle();
         }
 
         public static UserInfo CurrentUser
@@ -31,10 +41,10 @@ namespace InquirerForAndroid
             }
         }
 
-        public static EnterpriseInfo CurrentEnterprise
+        public static int CurrentEnterpriseId
         {
-            get => _currentEnterprise;
-            set => _currentEnterprise = value;
+            get => _currentEnterpriseId;
+            set => _currentEnterpriseId = value;
         }
 
         public static ViewModelBase CurrentViewModel { get; set; }
@@ -44,6 +54,6 @@ namespace InquirerForAndroid
 
         private static UserInfo _currentUser;
         private static Page _activePage;
-        private static EnterpriseInfo _currentEnterprise;
+        private static int _currentEnterpriseId;
     }
 }

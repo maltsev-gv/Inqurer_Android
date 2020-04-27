@@ -6,10 +6,12 @@
              mc:Ignorable="d"
              x:Class="InquirerForAndroid.App">
     <Application.Resources>
-        <Color x:Key="NavigationPrimary">#FE9225</Color>
+        <Color x:Key="EvrazYellow">#FCB53B</Color>
+        <Color x:Key="EvrazOrange">#F57F29</Color>
+        <Color x:Key="EvrazRed">#EE2D24</Color>
 
         <Style TargetType="{x:Type Button}">
-            <Setter Property="BackgroundColor" Value="{StaticResource NavigationPrimary}"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource EvrazOrange}"/>
             <Setter Property="CornerRadius" Value="20"/>
             <Setter Property="TextColor" Value="White"/>
             <Setter Property="BorderColor" Value="Wheat"/>

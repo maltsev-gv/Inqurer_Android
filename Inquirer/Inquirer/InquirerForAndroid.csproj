@@ -37,6 +37,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UserControls\SearchEntry.xaml.cs">
+      <DependentUpon>SearchEntry.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SurveySelectorPage.xaml.cs">
+      <DependentUpon>SurveySelectorPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\NewsPage.xaml.cs">
       <DependentUpon>NewsPage.xaml</DependentUpon>
     </Compile>

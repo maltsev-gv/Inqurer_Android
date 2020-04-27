@@ -2,7 +2,7 @@
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace XMobileGarage.Converters
+namespace InquirerForAndroid.Converters
 {
     public class NullToBoolConverter : IValueConverter
     {

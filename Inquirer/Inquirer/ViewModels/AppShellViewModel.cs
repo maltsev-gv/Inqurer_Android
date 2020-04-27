@@ -28,11 +28,11 @@ namespace InquirerForAndroid.ViewModels
         {
             try
             {
-               var user = await DataStore.Auth("");
+                var user = await DataStore.Auth("1234");
                 if (user != null)
                 {
                     var enterprises = await DataStore.GetEnterprises(true);
-                    Globals.CurrentEnterprise = enterprises.GetEnterprisesByFilter(null, true).FirstOrDefault();
+                    Globals.CurrentEnterpriseId = enterprises.GetEnterprisesByFilter(null, true).FirstOrDefault()?.EnterpriseId ?? 0;
                 }
             }
             catch (AuthenticationException)

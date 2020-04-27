@@ -29,41 +29,33 @@ namespace InquirerForAndroid.Views
 
         private void LabelText_OnBindingContextChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine("LabelText_OnBindingContextChanged");
             var label = (Label)sender;
             var info = (NewsBlockInfo)label.BindingContext;
 
             var height = DependencyService.Get<IVisualService>()
                 .MeasureTextSize(label.Text, listView.Width, label.FontSize, label.FontFamily);
             info.CanBeExpanded = height > _maxNewsBlockHeight;
-            Debug.WriteLine("LabelText_OnBindingContextChanged - finish");
         }
 
         private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
         {
-            Debug.WriteLine("ListView_OnItemTapped");
             var info = (NewsBlockInfo) e.Item;
             if (info.CanBeExpanded)
             {
                 info.IsExpanded = !info.IsExpanded;
             }
-            Debug.WriteLine("ListView_OnItemTapped - finish");
         }
 
         private void ListView_OnScrolled(object sender, ScrolledEventArgs e)
         {
-            Debug.WriteLine($"ListView_OnScrolled");
             if (_isAppearing)
             {
-                Debug.WriteLine($"ListView_OnScrolled. _isAppearing = true");
                 return;
             }
 
             _listScrollY = (int) e.ScrollY;
-            Debug.WriteLine($"ListView_OnScrolled. _listScrollY = {_listScrollY}");
             var items = DependencyService.Get<IVisualService>().GetListViewVisibleItems<NewsBlockInfo>(listView);
 
-            Debug.WriteLine($"ListView_OnScrolled. items?.Count = {items?.Count}"); 
             _itemIdToScroll = items.Count > 1 ? items[1].NewsBlockId
                 : items.Count == 1 ? items[0].NewsBlockId
                 : -1;
@@ -73,13 +65,11 @@ namespace InquirerForAndroid.Views
         private bool _isAppearing;
         private void NewsPage_OnAppearing(object sender, EventArgs e)
         {
-            Debug.WriteLine("NewsPage_OnAppearing");
             _isAppearing = true;
         }
 
         private void NewsPage_OnMeasureInvalidated(object sender, EventArgs e)
         {
-            Debug.WriteLine("NewsPage_OnMeasureInvalidated");
             if (_isAppearing)
             {
                 var item = NewsViewModel?.NewsBlocks?.FirstOrDefault(nb => nb.NewsBlockId == _itemIdToScroll);
@@ -87,16 +77,10 @@ namespace InquirerForAndroid.Views
                 {
                     listView.ScrollTo(item, ScrollToPosition.MakeVisible, false);
                     DependencyService.Get<IVisualService>().ScrollListViewTo(listView, 0, _listScrollY);
-                    Debug.WriteLine("NewsPage_OnMeasureInvalidated - scrolled");
                 }
 
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    _isAppearing = false;
-                    Debug.WriteLine("NewsPage_OnMeasureInvalidated - _isAppearing = false");
-                });
+                Device.BeginInvokeOnMainThread(() => _isAppearing = false);
             }
-            Debug.WriteLine("NewsPage_OnMeasureInvalidated - finish");
         }
     }
 }

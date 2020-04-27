@@ -10,9 +10,9 @@
              x:Class="InquirerForAndroid.Views.AuthPage"
              Title="{Binding Title}"
              >
-    <Shell.FlyoutBehavior>Flyout</Shell.FlyoutBehavior>
+    <!--<Shell.FlyoutBehavior>Flyout</Shell.FlyoutBehavior>-->
     <Shell.BackgroundColor>
-        <x:StaticResource>NavigationPrimary</x:StaticResource>
+        <x:StaticResource>EvrazOrange</x:StaticResource>
     </Shell.BackgroundColor>
 
     <ContentPage.BindingContext>

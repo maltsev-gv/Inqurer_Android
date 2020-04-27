@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Android.Provider;
 using InquirerForAndroid.Services;
 using InquirerForAndroid.ViewModels;
 using InquirerForAndroid.Views;
@@ -23,6 +24,7 @@ namespace InquirerForAndroid
             Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
             Routing.RegisterRoute(nameof(NewsPage), typeof(NewsPage));
             Routing.RegisterRoute(nameof(EnterpriseSelectorPage), typeof(EnterpriseSelectorPage));
+            Routing.RegisterRoute(nameof(SurveySelectorPage), typeof(SurveySelectorPage));
             Routing.RegisterRoute(nameof(AboutPage), typeof(AboutPage));
         }
 
@@ -147,14 +149,12 @@ namespace InquirerForAndroid
                 };
                 return;
             }
-            if (Globals.CurrentEnterprise != null)
+            if (Globals.CurrentEnterpriseId != 0)
             {
-                GoToPage(new EnterpriseSelectorViewModel());
-                //tab.Items[0] = new ShellContent()
-                //{
-                //    Content = new EnterpriseSelectorPage()
-                //};
-                return;
+                tab.Items[0] = new ShellContent()
+                {
+                    Content = new EnterpriseSelectorPage()
+                };
             }
         }
 

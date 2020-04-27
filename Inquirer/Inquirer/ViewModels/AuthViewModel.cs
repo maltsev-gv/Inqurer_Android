@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Diagnostics;
+using System.Windows.Input;
 using Rcn.Common;
 using Xamarin.Forms;
 
@@ -8,8 +9,9 @@ namespace InquirerForAndroid.ViewModels
     {
         public AuthViewModel()
         {
-            Title = "Добро пожаловать";
             AuthCommand = new Command(AuthMethod);
+            Debug.WriteLine($"AuthViewModel: ctor");
+            Title = "Добро пожаловать";
         }
 
         private async void AuthMethod()

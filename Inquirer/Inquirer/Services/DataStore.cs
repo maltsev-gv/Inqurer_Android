@@ -39,6 +39,7 @@ namespace InquirerForAndroid.Services
 
         public async Task<UserInfo> Auth(string personnelNumber)
         {
+            Debug.WriteLine($"{nameof(Auth)}: start");
             //personnelNumber = "1234";
             var responseInfo = await RequestServiceHelper.Post($"{Globals.BaseUrl}/Auth",
                 new AuthArgument() { PersonnelNumber = personnelNumber }, _headers);
@@ -47,6 +48,7 @@ namespace InquirerForAndroid.Services
                 var userInfo = ZippedJsonHelper.GetObjectFromZippedString<UserInfo>(responseInfo.Content);
                 Globals.CurrentUser = userInfo;
                 _headers[Constants.HeaderUserId] = userInfo.UserId.ToString();
+                Debug.WriteLine($"{nameof(Auth)}: finish");
                 return userInfo;
             }
             throw new AuthenticationException(responseInfo.Content);
@@ -78,6 +80,8 @@ namespace InquirerForAndroid.Services
                         ? _answers
                         : throw new ArgumentException($"{nameof(DoRequest)}: invalid type: {typeof(T)}");
 
+            Debug.WriteLine($"{nameof(DoRequest)}: start getting {typeof(T).Name}");
+
             if (forceRefresh || list.Count == 0)
             {
                 try
@@ -101,6 +105,7 @@ namespace InquirerForAndroid.Services
                 }
             }
 
+            Debug.WriteLine($"{nameof(DoRequest)}: returning {typeof(T).Name}");
             return (List<T>)list;
         }
 
