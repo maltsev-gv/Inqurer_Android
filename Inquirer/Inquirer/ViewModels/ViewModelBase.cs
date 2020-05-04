@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 using InquirerForAndroid.Services;
 using Rcn.Common;
 using Rcn.Common.ExtensionMethods;
@@ -11,13 +12,15 @@ namespace InquirerForAndroid.ViewModels
     {
         public ViewModelBase()
         {
-            Globals.ActivePageChanged += () =>
+            Globals.ScreenSizeChanged += () =>
             {
+                RaisePropertyChanged(nameof(FullWidth));
                 RaisePropertyChanged(nameof(HalfWidth));
                 RaisePropertyChanged(nameof(QuarterWidth));
-                RaisePropertyChanged(nameof(Title));
             };
+            BackButtonPressedCommand = new Command(OnBackButtonPressed);
         }
+
         public IDataStore DataStore => DependencyService.Get<IDataStore>();
         public IDeviceService DeviceService => DependencyService.Get<IDeviceService>();
 
@@ -27,22 +30,22 @@ namespace InquirerForAndroid.ViewModels
             set => SetVal(value);
         }
 
-        private static string _globalTitle = "";
-
         public string Title
         {
-            get => _globalTitle;
-            set
-            {
-                _globalTitle = value;
-                RaisePropertyChanged(nameof(Title));
-            }
+            get => GetVal<string>();
+            set => SetVal(value);
         }
 
-        public void RefreshTitle()
+        public bool IsBackButtonPresent
         {
-            RaisePropertyChanged(nameof(Title));
+            get => GetVal<bool>();
+            set => SetVal(value);
+        }
 
+        public ICommand BackButtonPressedCommand { get; }
+
+        protected virtual void OnBackButtonPressed()
+        {
         }
 
         public string ErrorMessage
@@ -59,7 +62,8 @@ namespace InquirerForAndroid.ViewModels
             }
         }
 
-        public double HalfWidth => DeviceDisplay.MainDisplayInfo.Width / 4;
-        public double QuarterWidth => DeviceDisplay.MainDisplayInfo.Width / 8;
+        public double FullWidth => Globals.ScreenWidth;
+        public double HalfWidth => FullWidth / 2;
+        public double QuarterWidth => FullWidth / 4;
     }
 }

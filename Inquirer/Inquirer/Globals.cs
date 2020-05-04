@@ -12,25 +12,6 @@ namespace InquirerForAndroid
     {
         public static string BaseUrl = "http://84.201.162.94:45000/api/inquirer/";
 
-        public static Page ActivePage
-        {
-            get => _activePage;
-            set
-            {
-                _activePage = value;
-                _activePage.Appearing -= OnAppearing;
-                _activePage.Appearing += OnAppearing;
-                ActivePageChanged?.Invoke();
-            }
-        }
-
-        private static void OnAppearing(object sender, EventArgs e)
-        {
-            var vm = (ViewModelBase) _activePage.BindingContext;
-            Debug.WriteLine($"OnAppearing: {vm.GetType().Name} - {vm.Title}");
-            ((ViewModelBase) _activePage.BindingContext).RefreshTitle();
-        }
-
         public static UserInfo CurrentUser
         {
             get => _currentUser;
@@ -49,11 +30,24 @@ namespace InquirerForAndroid
 
         public static ViewModelBase CurrentViewModel { get; set; }
 
-        public static Action ActivePageChanged;
+        public static double ScreenWidth
+        {
+            get => _screenWidth;
+            set
+            {
+                _screenWidth = value;
+                ScreenSizeChanged?.Invoke();
+            }
+        }
+
+        public static double ScreenHeight { get; set; }
+
         public static Action CurrentUserChanged;
+        public static Action ScreenSizeChanged;
 
         private static UserInfo _currentUser;
-        private static Page _activePage;
+        private static Page _activeViewModel;
         private static int _currentEnterpriseId;
+        private static double _screenWidth;
     }
 }

@@ -15,24 +15,17 @@ using Xamarin.Forms;
 
 namespace InquirerForAndroid.ViewModels
 {
-    public class EnterpriseSelectorViewModel : ViewModelBase
+    public class SurveySelectorViewModel : ViewModelBase
     {
-        public EnterpriseSelectorViewModel()
+        public SurveySelectorViewModel()
         {
             //GoToAuth();
-            Debug.WriteLine($"EnterpriseSelectorViewModel: ctor");
-            Title = "Выбор предприятия";
+            Debug.WriteLine($"SurveySelectorViewModel: ctor");
+            Title = "Выбор опроса";
+            IsBackButtonPresent = true;
             LoadEnterprisesCommand = new Command(async isForced => await LoadItemsMethod(isForced as bool? ?? true));
             ExpandItemCommand = new Command(ExpandItemMethod);
-            EnterpriseSelectedCommand = new Command(EnterpriseSelectedMethod);
             LoadEnterprisesCommand.Execute(false);
-        }
-
-        private void EnterpriseSelectedMethod(object obj)
-        {
-            var info = (EnterpriseInfo) obj;
-            Globals.CurrentEnterpriseId = info.EnterpriseId;
-            WrapperPage.GoToView(viewModel: new SurveySelectorViewModel(info));
         }
 
         private void ExpandItemMethod(object obj)
@@ -46,11 +39,16 @@ namespace InquirerForAndroid.ViewModels
 
         public ICommand LoadEnterprisesCommand { get; set; }
         public ICommand ExpandItemCommand { get; set; }
-        public ICommand EnterpriseSelectedCommand { get; set; }
+        public ICommand SearchEnterpriseCommand { get; set; }
 
         private void GoToAuth()
         {
             AppShell.GoToPage(new AuthViewModel());
+        }
+
+        protected override void OnBackButtonPressed()
+        {
+            WrapperPage.GoToView(new EnterpriseSelectorViewModel(), usePreviousViewModel: true);
         }
 
         public List<EnterpriseInfo> Enterprises
@@ -79,6 +77,10 @@ namespace InquirerForAndroid.ViewModels
 
         private List<EnterpriseInfo> _rawEnterprises;
         private static Dictionary<int, bool> _visibleEnterprises = new Dictionary<int, bool>();
+
+        public SurveySelectorViewModel(EnterpriseInfo info) : this()
+        {
+        }
 
         public async Task LoadItemsMethod(bool forceRefresh)
         {

@@ -22,6 +22,7 @@ namespace Inquirer.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
+            Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             //Window.DecorView.LayoutDirection = LayoutDirection.Rtl;
 
             LoadApplication(new App());
@@ -36,8 +37,16 @@ namespace Inquirer.Droid
 
         public override void OnBackPressed()
         {
-            var page = (AppShell)Xamarin.Forms.Application.Current.MainPage;
-            page.RaiseOnBackPressed();
+            if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
+            {
+                // Do something if there are some pages in the `PopupStack`
+            }
+            else
+            {
+                // Do something if there are not any pages in the `PopupStack`
+                var page = (AppShell)Xamarin.Forms.Application.Current.MainPage;
+                page.RaiseOnBackPressed();
+            }
         }
 
         //public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)

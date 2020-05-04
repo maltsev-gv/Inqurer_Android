@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using Android.Content;
+using InquirerForAndroid.ViewModels;
 using Xamarin.Forms;
 using Application = Android.App.Application;
 
@@ -16,8 +17,11 @@ namespace InquirerForAndroid.Views
         public RegistrationPage()
         {
             InitializeComponent();
-            Globals.ActivePage = this;
+            Globals.CurrentViewModel = ViewModel;
             //Shell.SetFlyoutBehavior(this, FlyoutBehavior.Flyout);
         }
+
+        public RegistrationViewModel ViewModel => BindingContext as RegistrationViewModel;
+
     }
 }

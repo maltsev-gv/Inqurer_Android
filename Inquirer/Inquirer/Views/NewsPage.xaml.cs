@@ -17,11 +17,10 @@ namespace InquirerForAndroid.Views
         public NewsPage()
         {
             InitializeComponent();
-            Globals.ActivePage = this;
-            NewsViewModel = (NewsViewModel) BindingContext;
+            Globals.CurrentViewModel = ViewModel;
         }
 
-        public static NewsViewModel NewsViewModel;
+        public NewsViewModel ViewModel => BindingContext as NewsViewModel;
 
         private int _maxNewsBlockHeight = 200;
         private static int _listScrollY;
@@ -72,7 +71,7 @@ namespace InquirerForAndroid.Views
         {
             if (_isAppearing)
             {
-                var item = NewsViewModel?.NewsBlocks?.FirstOrDefault(nb => nb.NewsBlockId == _itemIdToScroll);
+                var item = ViewModel?.NewsBlocks?.FirstOrDefault(nb => nb.NewsBlockId == _itemIdToScroll);
                 if (item != null)
                 {
                     listView.ScrollTo(item, ScrollToPosition.MakeVisible, false);

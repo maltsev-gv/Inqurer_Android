@@ -51,7 +51,7 @@
             <ShellContent ContentTemplate="{DataTemplate local:NewsPage}"/>
         </Tab>
         <Tab x:Name="surveyTab" Title="Опросы" Icon="tab_feed.png" Appearing="SurveyTab_OnAppearing">
-            <ShellContent ContentTemplate="{DataTemplate local:AuthPage}" />
+            <ShellContent ContentTemplate="{DataTemplate local:WrapperPage}" />
         </Tab>
     </TabBar>
 

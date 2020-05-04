@@ -12,5 +12,7 @@ namespace InquirerForAndroid.Models
         public UserSurveyStatuses UserStatus { get; set; }
         public DateTime EndsAt { get; set; }
         public DateTime ProcessedAt { get; set; }
+        public ISurveyReportInfo SurveyReportTemplate { get; set; }
+        public int SurveyReportId { get; set; }
     }
 }

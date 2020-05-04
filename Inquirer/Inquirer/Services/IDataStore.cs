@@ -12,5 +12,6 @@ namespace InquirerForAndroid.Services
         Task<List<NewsBlockInfo>> GetNews(bool forceRefresh);
         Task<string> GetApk(int apkId, Action<double> progressChangedAction = null);
         int UnpackTime { get; set; }
+        string ConnectionErrorString { get; }
     }
 }

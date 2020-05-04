@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -19,19 +20,23 @@ namespace InquirerForAndroid
         public AppShell()
         {
             InitializeComponent();
-            Globals.ActivePageChanged += OnActivePageChanged;
             Routing.RegisterRoute(nameof(AuthPage), typeof(AuthPage));
             Routing.RegisterRoute(nameof(RegistrationPage), typeof(RegistrationPage));
+            Routing.RegisterRoute(nameof(WrapperPage), typeof(WrapperPage));
             Routing.RegisterRoute(nameof(NewsPage), typeof(NewsPage));
-            Routing.RegisterRoute(nameof(EnterpriseSelectorPage), typeof(EnterpriseSelectorPage));
-            Routing.RegisterRoute(nameof(SurveySelectorPage), typeof(SurveySelectorPage));
             Routing.RegisterRoute(nameof(AboutPage), typeof(AboutPage));
+
+            _surveyTab = surveyTab;
         }
 
-        private void AppShell_OnSizeChanged(object sender, EventArgs e)
+        private static Tab _surveyTab;
+
+        private static Type[] _viewsAtWrapper =
         {
-            Globals.ActivePageChanged?.Invoke();
-        }
+            typeof(AuthView),
+            typeof(EnterpriseSelectorView),
+            typeof(SurveySelectorView),
+        };
 
         private static Regex _viewModelRegex = new Regex("(.+)ViewModel");
         public static async void GoToPage(ViewModelBase viewModel)
@@ -44,7 +49,20 @@ namespace InquirerForAndroid
             }
 
             Globals.CurrentViewModel = viewModel;
-            await Current.GoToAsync($"{match.Groups[1].Value}Page");
+
+            var viewName = $"{match.Groups[1].Value}View";
+            var wrapperPage = _surveyTab.Items[0].Content as WrapperPage;
+            var wrapperViewModel = (WrapperViewModel)wrapperPage.BindingContext;
+            wrapperViewModel.ActiveView =
+                (ContentView) Activator.CreateInstance(_viewsAtWrapper.Single(v => v.Name == viewName));
+            wrapperViewModel.ActiveView.BindingContext = viewModel;
+            //if (viewModel is SurveySelectorViewModel)
+            //{
+            //}
+            //else
+            //{
+            //    await Current.GoToAsync($"{match.Groups[1].Value}Page");
+            //}
         }
 
         private static string _lastMessage = "";
@@ -88,11 +106,11 @@ namespace InquirerForAndroid
 
         private void OnActivePageChanged()
         {
-            //if (Globals.ActivePage is EnterpriseSelectorPage)
+            //if (Globals.ActiveViewModel is EnterpriseSelectorView)
             //{
             //    Current.Items.Add(CreateMenuItem("Выбор предприятия", new Command(async () =>
             //    {
-            //        await Current.Navigation.PushAsync(new EnterpriseSelectorPage());
+            //        await Current.Navigation.PushAsync(new EnterpriseSelectorView());
             //        Current.FlyoutIsPresented = false;
             //    })));
             //}
@@ -138,24 +156,24 @@ namespace InquirerForAndroid
 
         private void SurveyTab_OnAppearing(object sender, EventArgs e)
         {
-            var tab = (Tab)sender;
+            //var tab = (Tab)sender;
 
-            var page = tab.Items[0].Content;
-            if (Globals.CurrentUser == null)
-            {
-                tab.Items[0] = new ShellContent()
-                {
-                    Content = new AuthPage()
-                };
-                return;
-            }
-            if (Globals.CurrentEnterpriseId != 0)
-            {
-                tab.Items[0] = new ShellContent()
-                {
-                    Content = new EnterpriseSelectorPage()
-                };
-            }
+            //var page = tab.Items[0].Content;
+            //if (Globals.CurrentUser == null)
+            //{
+            //    tab.Items[0] = new ShellContent()
+            //    {
+            //        Content = new AuthView()
+            //    };
+            //    return;
+            //}
+            //if (Globals.CurrentEnterpriseId != 0)
+            //{
+            //    tab.Items[0] = new ShellContent()
+            //    {
+            //        Content = new EnterpriseSelectorView()
+            //    };
+            //}
         }
 
         private void NewsTab_OnAppearing(object sender, EventArgs e)
@@ -176,6 +194,13 @@ namespace InquirerForAndroid
             //        }
             //    };
             //}
+        }
+
+        private void AppShell_OnSizeChanged(object sender, EventArgs e)
+        {
+            Globals.ScreenHeight = Application.Current.MainPage.Height;
+            Globals.ScreenWidth = Application.Current.MainPage.Width - 12;
+            Debug.WriteLine($"Globals.ScreenWidth = {Globals.ScreenWidth}");
         }
     }
 }

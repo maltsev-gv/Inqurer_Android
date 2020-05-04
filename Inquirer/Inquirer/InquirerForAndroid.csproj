@@ -19,6 +19,9 @@
     <EmbeddedResource Update="UserControls\StarsSelector.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\WrapperPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -40,20 +43,26 @@
     <Compile Update="UserControls\SearchEntry.xaml.cs">
       <DependentUpon>SearchEntry.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\SurveySelectorPage.xaml.cs">
-      <DependentUpon>SurveySelectorPage.xaml</DependentUpon>
+    <Compile Update="Views\AuthPage.xaml.cs">
+      <DependentUpon>AuthPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\WrapperPage.xaml.cs">
+      <DependentUpon>WrapperPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SurveySelectorView.xaml.cs">
+      <DependentUpon>SurveySelectorView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\NewsPage.xaml.cs">
       <DependentUpon>NewsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\EnterpriseSelectorPage.xaml.cs">
-      <DependentUpon>EnterpriseSelectorPage.xaml</DependentUpon>
+    <Compile Update="Views\EnterpriseSelectorView.xaml.cs">
+      <DependentUpon>EnterpriseSelectorView.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\AuthPage.xaml.cs">
-      <DependentUpon>AuthPage.xaml</DependentUpon>
+    <Compile Update="Views\AuthView.xaml.cs">
+      <DependentUpon>AuthView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>

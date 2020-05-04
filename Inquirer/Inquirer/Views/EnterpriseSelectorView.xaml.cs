@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using InquirerForAndroid.Models;
 using InquirerForAndroid.ViewModels;
 using Xamarin.Forms;
 
@@ -11,12 +10,12 @@ namespace InquirerForAndroid.Views
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class EnterpriseSelectorPage : ContentPage
+    public partial class EnterpriseSelectorView : IScrollableView
     {
-        public EnterpriseSelectorPage()
+        public EnterpriseSelectorView()
         {
-            Debug.WriteLine(" ctor EnterpriseSelectorPage");
-            Globals.ActivePage = this;
+            Debug.WriteLine(" ctor EnterpriseSelectorView");
+            Globals.CurrentViewModel = ViewModel;
             InitializeComponent();
         }
 
@@ -27,11 +26,10 @@ namespace InquirerForAndroid.Views
             ViewModel.EnterpriseSelectedCommand.Execute(e.Item);
         }
 
-        private void EnterpriseSelectorPage_OnAppearing(object sender, EventArgs e)
+        private void EnterpriseSelectorView_OnSizeChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine("EnterpriseSelectorPage OnAppearing");
-            ViewModel.Title = "Выбор предприятия";
-            (BindingContext as ViewModelBase)?.RefreshTitle();
+            Debug.WriteLine("EnterpriseSelectorView_OnSizeChanged");
+            IsScrolled = true;
             if (Globals.CurrentEnterpriseId != 0)
             {
                 var info = ViewModel.Enterprises.FirstOrDefault(ei => ei.EnterpriseId == Globals.CurrentEnterpriseId);
@@ -41,5 +39,12 @@ namespace InquirerForAndroid.Views
                 }
             }
         }
+
+        private void EnterpriseSelectorView_OnMeasureInvalidated(object sender, EventArgs e)
+        {
+            Debug.WriteLine("EnterpriseSelectorView_OnMeasureInvalidated");
+        }
+
+        public bool IsScrolled { get; set; }
     }
 }

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:InquirerForAndroid.ViewModels;assembly=InquirerForAndroid"
+             xmlns:views="clr-namespace:InquirerForAndroid.Views;assembly=InquirerForAndroid"
+             xmlns:converters="clr-namespace:InquirerForAndroid.Converters;assembly=InquirerForAndroid"
+             mc:Ignorable="d"
+             Title="{Binding ActiveView.BindingContext.Title}"
+             x:Class="InquirerForAndroid.Views.WrapperPage"
+             Appearing="WrapperPage_OnAppearing"
+             x:Name="wrapperPage">
+    <Shell.TitleView>
+        <!--<Grid HorizontalOptions="Fill" VerticalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>-->
+        <StackLayout Orientation="Horizontal">
+            <ImageButton Grid.Column="0" Source="back.png" HeightRequest="30" BackgroundColor="Transparent" 
+                         IsVisible="{Binding ActiveView.BindingContext.IsBackButtonPresent}" Command="{Binding ActiveView.BindingContext.BackButtonPressedCommand}"/>
+            <Label Grid.Column="1" Text="{Binding ActiveView.BindingContext.Title}" VerticalOptions="Center" FontSize="22" TextColor="White" Margin="50,0,0,0"/>
+        </StackLayout>
+        <!--</Grid>-->
+    </Shell.TitleView>
+
+    <ScrollView x:Name="scrollView" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+        <Grid x:Name="grid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <views:AuthView Grid.Column="0" WidthRequest="{Binding FullWidth}" IsVisible="False"/>
+            <views:EnterpriseSelectorView Grid.Column="1" WidthRequest="{Binding FullWidth}" IsVisible="False"/>
+            <views:SurveySelectorView Grid.Column="2" WidthRequest="{Binding FullWidth}" IsVisible="False"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

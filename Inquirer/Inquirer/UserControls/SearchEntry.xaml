@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:InquirerForAndroid.Converters;assembly=InquirerForAndroid"
+             mc:Ignorable="d"
+             x:Class="InquirerForAndroid.UserControls.SearchEntry"
+             x:Name="searchEntry">
+    <ContentView.Content>
+        <Frame Grid.Row="1" BorderColor="{StaticResource EvrazOrange}" CornerRadius="5" Padding="5,0" MinimumHeightRequest="45">
+            <Frame.Style>
+                <Style TargetType="{x:Type Frame}">
+                    <Style.Triggers>
+                        <DataTrigger TargetType="{x:Type Frame}" Binding="{Binding Text, Converter={converters:EmptyStringToBoolConverter}, Source={x:Reference searchEntry}}" Value="false">
+                            <Setter Property="BackgroundColor" Value="#EEEEEE"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Frame.Style>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="{Binding Prompt, Source={x:Reference searchEntry}}" TextColor="Gray" 
+                       IsVisible="{Binding Text, Source={x:Reference searchEntry}, Converter={converters:EmptyStringToBoolConverter}, ConverterParameter=r}" 
+                       VerticalOptions="Center" Margin="5,0"/>
+                <Entry Grid.Column="0" x:Name="entry" Text="{Binding Text, Source={x:Reference searchEntry}, Mode=TwoWay}" 
+                       Keyboard="{Binding Keyboard, Source={x:Reference searchEntry}}"/>
+                <ImageButton Grid.Column="1" HorizontalOptions="End" WidthRequest="25" Source="zoom_orange.png" Margin="5,0"
+                             Command="{Binding SearchCommand, Source={x:Reference searchEntry}}" 
+                             CommandParameter="{Binding SearchCommandParameter, Source={x:Reference searchEntry}}" 
+                             IsVisible="{Binding SearchCommand, Source={x:Reference searchEntry}, Converter={converters:NullToBoolConverter}}"
+                             BackgroundColor="Transparent"/>
+            </Grid>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

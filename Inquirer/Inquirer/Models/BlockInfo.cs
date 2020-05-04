@@ -6,6 +6,7 @@ namespace InquirerForAndroid.Models
     public class BlockInfo : IBlockInfo
     {
         public int BlockId { get; set; }
+        public int ParentBlockId { get; set; }
         public string BlockName { get; set; }
         public List<IBlockInfo> SubBlocks { get; set; }
         public int Order { get; set; }

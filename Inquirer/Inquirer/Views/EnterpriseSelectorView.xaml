@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,15 +9,16 @@
              xmlns:subComponents="clr-namespace:InquirerForAndroid.ViewModels.SubComponents;assembly=InquirerForAndroid"
              xmlns:models="clr-namespace:InquirerForAndroid.Models;assembly=InquirerForAndroid"
              mc:Ignorable="d"
-             x:Class="InquirerForAndroid.Views.EnterpriseSelectorPage"
+             x:Class="InquirerForAndroid.Views.EnterpriseSelectorView"
              x:Name="enterpriseSelectorPage"
-             Appearing="EnterpriseSelectorPage_OnAppearing"
-             Title="{Binding Title}">
-    <ContentPage.BindingContext>
+             SizeChanged="EnterpriseSelectorView_OnSizeChanged"
+             MeasureInvalidated="EnterpriseSelectorView_OnMeasureInvalidated"
+             >
+    <ContentView.BindingContext>
         <viewmodels:EnterpriseSelectorViewModel/>
-    </ContentPage.BindingContext>
+    </ContentView.BindingContext>
 
-    <ContentPage.Resources>
+    <ContentView.Resources>
         <DataTemplate x:Key="enterpriseTemplate">
             <ViewCell>
                 <ViewCell.BindingContext>
@@ -65,9 +66,9 @@
                 </Grid>
             </ViewCell>
         </DataTemplate>
-    </ContentPage.Resources>
+    </ContentView.Resources>
 
-    <Grid Margin="16,0">
+    <Grid Margin="8,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -84,12 +85,10 @@
                   RefreshCommand="{Binding LoadEnterprisesCommand}"
                   SelectionMode="None"
                   IsPullToRefreshEnabled="true"
-                  IsRefreshing="{Binding IsRefreshing}"
+                  IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
                   SeparatorVisibility="None"
                   CachingStrategy="RecycleElement" 
                   ItemTapped="ListView_OnItemTapped"
-                  >
-
-        </ListView>
+                  />
     </Grid>
-</ContentPage>
+</ContentView>

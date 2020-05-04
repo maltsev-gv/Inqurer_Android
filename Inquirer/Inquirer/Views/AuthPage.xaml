@@ -3,35 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:converters="clr-namespace:InquirerForAndroid.Converters;assembly=InquirerForAndroid"
-             xmlns:userControls="clr-namespace:InquirerForAndroid.UserControls;assembly=InquirerForAndroid"
-             xmlns:viewmodels="clr-namespace:InquirerForAndroid.ViewModels"
+             xmlns:views="clr-namespace:InquirerForAndroid.Views;assembly=InquirerForAndroid"
              mc:Ignorable="d"
-             x:Class="InquirerForAndroid.Views.AuthPage"
-             Title="{Binding Title}"
-             >
-    <!--<Shell.FlyoutBehavior>Flyout</Shell.FlyoutBehavior>-->
-    <Shell.BackgroundColor>
-        <x:StaticResource>EvrazOrange</x:StaticResource>
-    </Shell.BackgroundColor>
-
-    <ContentPage.BindingContext>
-        <viewmodels:AuthViewModel/>
-    </ContentPage.BindingContext>
-
-    <ScrollView>
-        <Grid HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="{Binding HalfWidth}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Text="Опросник" FontSize="36" FontAttributes="Italic,Bold" Margin="0,20" HorizontalOptions="Center" TextColor="Black"/>
-
-            <userControls:GrayEntry Grid.Row="1" Text="{Binding PersonnelNumber}" Prompt="Табельный номер"/>
-
-            <Button Grid.Row="3" Text="Авторизация" Margin="0,20" Command="{Binding AuthCommand}"/>
-        </Grid>
-    </ScrollView>
+             Title="{Binding BindingContext.Title, Source={x:Reference view}}"
+             x:Class="InquirerForAndroid.Views.AuthPage">
+    <views:AuthView x:Name="view"/>
 </ContentPage>

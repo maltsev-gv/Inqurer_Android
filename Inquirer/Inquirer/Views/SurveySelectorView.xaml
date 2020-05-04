@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:InquirerForAndroid.Converters;assembly=InquirerForAndroid"
+             xmlns:userControls="clr-namespace:InquirerForAndroid.UserControls;assembly=InquirerForAndroid"
+             xmlns:viewmodels="clr-namespace:InquirerForAndroid.ViewModels"
+             xmlns:subComponents="clr-namespace:InquirerForAndroid.ViewModels.SubComponents;assembly=InquirerForAndroid"
+             xmlns:models="clr-namespace:InquirerForAndroid.Models;assembly=InquirerForAndroid"
+             mc:Ignorable="d"
+             x:Class="InquirerForAndroid.Views.SurveySelectorView"
+             SizeChanged="SurveySelectorView_OnSizeChanged"
+             x:Name="surveySelectorPage">
+    <ContentView.BindingContext>
+        <viewmodels:EnterpriseSelectorViewModel/>
+    </ContentView.BindingContext>
+
+    <ContentView.Resources>
+        <DataTemplate x:Key="surveyTemplate">
+            <ViewCell>
+                <!--<ViewCell.BindingContext>
+                    <models:EnterpriseInfo/>
+                </ViewCell.BindingContext>-->
+
+                <Grid>
+                    <!--<Grid IsVisible="{Binding IsVisible}" Margin="0,4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0" WidthRequest="{Binding NestingLevel, Converter={converters:WidthMultiplyConverter}, ConverterParameter=10}"/>
+                        
+                        --><!--Непонятная магия с марджинами у фрейма--><!--
+                        <Frame Grid.Column="1" Padding="0" BorderColor="{StaticResource EvrazYellow}" CornerRadius="5" HasShadow="True" IsClippedToBounds="True" Margin="-6,0,0,0">
+
+                            <Grid Margin="0" HorizontalOptions="Fill" VerticalOptions="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Column="0" Text="{Binding Name}" HorizontalOptions="Fill" LineHeight="1.4" FontSize="20" 
+                                       VerticalOptions="Center" Margin="8,6" TextColor="Black"/>
+                                <userControls:ContentButton Grid.Column="1" IsVisible="{Binding IsExpandable}" VerticalOptions="Center"
+                                        Command="{Binding BindingContext.ExpandItemCommand, Source={x:Reference surveySelectorPage}}" CommandParameter="{Binding}">
+                                    <Image BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" Margin="0,0,8,0">
+                                        <Image.Style>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Source" Value="corner_right.png"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger TargetType="Image" Binding="{Binding IsExpanded}" Value="True">
+                                                        <Setter Property="Source" Value="corner_down.png"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Image.Style>
+                                    </Image>
+                                </userControls:ContentButton>
+                            </Grid>
+                        </Frame>
+                    </Grid>-->
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+    </ContentView.Resources>
+
+    <Grid Margin="16,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <userControls:SearchEntry Grid.Row="0" x:Name="searchEntry" Margin="0,8,0,4"
+                                  Prompt="Поиск опроса по названию"
+                                  Text="{Binding FilterText}"/>
+
+        <!--<ListView x:Name="listView" Grid.Row="1" 
+                  ItemsSource="{Binding Enterprises}" 
+                  ItemTemplate="{StaticResource enterpriseTemplate}"
+                  HasUnevenRows="true"
+                  RefreshCommand="{Binding LoadEnterprisesCommand}"
+                  SelectionMode="None"
+                  IsPullToRefreshEnabled="true"
+                  IsRefreshing="{Binding IsRefreshing}"
+                  SeparatorVisibility="None"
+                  CachingStrategy="RecycleElement" 
+                  ItemTapped="ListView_OnItemTapped"
+                  >
+
+        </ListView>-->
+    </Grid>
+</ContentView>

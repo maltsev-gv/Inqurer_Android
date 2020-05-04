@@ -5,6 +5,7 @@ using System.Security.Authentication;
 using System.Threading.Tasks;
 using InquirerForAndroid.Models;
 using InquirerForAndroid.Services;
+using InquirerForAndroid.Views;
 using Xamarin.Forms;
 
 namespace InquirerForAndroid.ViewModels
@@ -33,14 +34,19 @@ namespace InquirerForAndroid.ViewModels
                 {
                     var enterprises = await DataStore.GetEnterprises(true);
                     Globals.CurrentEnterpriseId = enterprises.GetEnterprisesByFilter(null, true).FirstOrDefault()?.EnterpriseId ?? 0;
+                    if (Globals.CurrentEnterpriseId == 0)
+                    {
+                        WrapperPage.GoToView(new EnterpriseSelectorViewModel(), false);
+                    }
                 }
+                WrapperPage.GoToView(new AuthViewModel());
             }
             catch (AuthenticationException)
             { 
             }
             catch (Exception ex)
             {
-                ErrorMessage = ex.Message;
+                ErrorMessage = ex is Java.Net.SocketException ? DataStore.ConnectionErrorString : ex.Message;
             }
         }
     }
