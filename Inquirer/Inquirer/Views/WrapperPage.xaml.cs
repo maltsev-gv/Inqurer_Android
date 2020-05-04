@@ -28,13 +28,15 @@ namespace InquirerForAndroid.Views
         private static WrapperViewModel _wrapperViewModel;
         private static WrapperPage _wrapperPage;
 
-        private static async Task ScrollTo(IScrollableView destView, bool forward)
+        private static async Task ScrollTo(IScrollableView destView, IScrollableView sourceView, bool forward)
         {
             if (!forward)
             {
-                var pos = _wrapperPage.scrollView.GetScrollPositionForElement(destView as VisualElement, ScrollToPosition.Start);
-                await _wrapperPage.scrollView.ScrollToAsync(destView as VisualElement, ScrollToPosition.Start, true);
-                return;
+                destView.HideContent();
+                await _wrapperPage.scrollView.ScrollToAsync(sourceView as View, ScrollToPosition.Start, false);
+                destView.ShowContent();
+                //await _wrapperPage.scrollView.ScrollToAsync(-360, 0, true);
+                //return;
             }
 
             SemaphoreSlim semaphoreSlim = new SemaphoreSlim(0);
@@ -62,7 +64,7 @@ namespace InquirerForAndroid.Views
             await semaphoreSlim.WaitAsync();
         }
 
-        public static async void GoToView(ViewModelBase viewModel, bool isScrollNeeded = true, bool usePreviousViewModel = false)
+        public static async void GoToView(ViewModelBase viewModel, bool isScrollNeeded = true, bool forward = true)
         {
             if (_wrapperPage == null)
             {
@@ -70,7 +72,8 @@ namespace InquirerForAndroid.Views
                 return;
             }
 
-            var view = GetViewByModel(viewModel);
+            var view = GetViewByModel(viewModel, forward);
+            var usePreviousViewModel = viewModel is AuthViewModel || viewModel is EnterpriseSelectorViewModel;
             if (usePreviousViewModel)
             {
                 viewModel = view.BindingContext as ViewModelBase;
@@ -83,10 +86,7 @@ namespace InquirerForAndroid.Views
             if (isScrollNeeded)
             {
                 prevActiveView = _wrapperViewModel.ActiveView;
-                var x1 = _wrapperPage.scrollView.GetScrollPositionForElement(prevActiveView, ScrollToPosition.Start);
-                var x2 = _wrapperPage.scrollView.GetScrollPositionForElement(view, ScrollToPosition.Start);
-                var forward = _wrapperPage.grid.Children.IndexOf(view) > _wrapperPage.grid.Children.IndexOf(prevActiveView);
-                await ScrollTo(view as IScrollableView, forward);
+                await ScrollTo(view as IScrollableView, prevActiveView as IScrollableView, forward);
             }
 
             _wrapperViewModel.ActiveView = view;
@@ -97,7 +97,7 @@ namespace InquirerForAndroid.Views
             }
         }
 
-        private static ContentView GetViewByModel(ViewModelBase viewModel)
+        private static ContentView GetViewByModel(ViewModelBase viewModel, bool forward)
         {
             var typeName = viewModel.GetType().Name;
             var match = _viewModelRegex.Match(typeName);

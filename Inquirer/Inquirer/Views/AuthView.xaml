@@ -20,7 +20,7 @@
     </ContentView.BindingContext>
 
     <ScrollView>
-        <Grid HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="{Binding HalfWidth}">
+        <Grid HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="{Binding HalfWidth}" x:Name="mainGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>

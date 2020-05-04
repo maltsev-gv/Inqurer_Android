@@ -68,7 +68,7 @@
         </DataTemplate>
     </ContentView.Resources>
 
-    <Grid Margin="8,0">
+    <Grid Margin="8,0" x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -84,11 +84,11 @@
                   HasUnevenRows="true"
                   RefreshCommand="{Binding LoadEnterprisesCommand}"
                   SelectionMode="None"
-                  IsPullToRefreshEnabled="true"
-                  IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
                   SeparatorVisibility="None"
                   CachingStrategy="RecycleElement" 
                   ItemTapped="ListView_OnItemTapped"
                   />
+        <!--IsPullToRefreshEnabled="true"
+                  IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"-->
     </Grid>
 </ContentView>

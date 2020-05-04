@@ -48,7 +48,7 @@ namespace InquirerForAndroid.ViewModels
 
         protected override void OnBackButtonPressed()
         {
-            WrapperPage.GoToView(new EnterpriseSelectorViewModel(), usePreviousViewModel: true);
+            WrapperPage.GoToView(new EnterpriseSelectorViewModel(), forward: false);
         }
 
         public List<EnterpriseInfo> Enterprises

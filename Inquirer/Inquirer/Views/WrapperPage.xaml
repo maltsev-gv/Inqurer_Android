@@ -12,18 +12,18 @@
              Appearing="WrapperPage_OnAppearing"
              x:Name="wrapperPage">
     <Shell.TitleView>
-        <!--<Grid HorizontalOptions="Fill" VerticalOptions="Center">
+        <Grid HorizontalOptions="Fill" VerticalOptions="Center">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="40"/>
                 <ColumnDefinition />
                 <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>-->
-        <StackLayout Orientation="Horizontal">
-            <ImageButton Grid.Column="0" Source="back.png" HeightRequest="30" BackgroundColor="Transparent" 
+            </Grid.ColumnDefinitions>
+            <!--<StackLayout Orientation="Horizontal">-->
+            <ImageButton Grid.Column="0" Source="back.png" WidthRequest="30" BackgroundColor="Transparent" 
                          IsVisible="{Binding ActiveView.BindingContext.IsBackButtonPresent}" Command="{Binding ActiveView.BindingContext.BackButtonPressedCommand}"/>
-            <Label Grid.Column="1" Text="{Binding ActiveView.BindingContext.Title}" VerticalOptions="Center" FontSize="22" TextColor="White" Margin="50,0,0,0"/>
-        </StackLayout>
-        <!--</Grid>-->
+            <Label Grid.Column="1" Text="{Binding ActiveView.BindingContext.Title}" VerticalOptions="Center" FontSize="22" TextColor="White" Margin="10,0,0,0"/>
+        <!--</StackLayout>-->
+        </Grid>
     </Shell.TitleView>
 
     <ScrollView x:Name="scrollView" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">

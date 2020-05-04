@@ -24,5 +24,15 @@ namespace InquirerForAndroid.Views
         {
             IsScrolled = true;
         }
+
+        public void HideContent()
+        {
+            mainGrid.IsVisible = false;
+        }
+
+        public void ShowContent()
+        {
+            mainGrid.IsVisible = true;
+        }
     }
 }
