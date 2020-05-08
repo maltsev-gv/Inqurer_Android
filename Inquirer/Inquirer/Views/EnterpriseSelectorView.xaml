@@ -6,7 +6,6 @@
              xmlns:converters="clr-namespace:InquirerForAndroid.Converters;assembly=InquirerForAndroid"
              xmlns:userControls="clr-namespace:InquirerForAndroid.UserControls;assembly=InquirerForAndroid"
              xmlns:viewmodels="clr-namespace:InquirerForAndroid.ViewModels"
-             xmlns:subComponents="clr-namespace:InquirerForAndroid.ViewModels.SubComponents;assembly=InquirerForAndroid"
              xmlns:models="clr-namespace:InquirerForAndroid.Models;assembly=InquirerForAndroid"
              mc:Ignorable="d"
              x:Class="InquirerForAndroid.Views.EnterpriseSelectorView"
@@ -35,7 +34,7 @@
                         <Grid Grid.Column="0" WidthRequest="{Binding NestingLevel, Converter={converters:WidthMultiplyConverter}, ConverterParameter=10}"/>
                         
                         <!--Непонятная магия с марджинами у фрейма-->
-                        <Frame Grid.Column="1" Padding="0" BorderColor="{StaticResource EvrazYellow}" CornerRadius="5" HasShadow="True" IsClippedToBounds="True" Margin="-6,0,0,0">
+                        <Frame Grid.Column="1" Margin="-6,0,0,0">
 
                             <Grid Margin="0" HorizontalOptions="Fill" VerticalOptions="Center">
                                 <Grid.ColumnDefinitions>
@@ -43,8 +42,8 @@
                                     <ColumnDefinition Width="30"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Label Grid.Column="0" Text="{Binding Name}" HorizontalOptions="Fill" LineHeight="1.4" FontSize="20" 
-                                       VerticalOptions="Center" Margin="8,6" TextColor="Black"/>
+                                <Label Grid.Column="0" Text="{Binding Name}" FontSize="18" 
+                                       VerticalOptions="Center" Margin="8,6" />
                                 <userControls:ContentButton Grid.Column="1" IsVisible="{Binding IsExpandable}" VerticalOptions="Center"
                                         Command="{Binding BindingContext.ExpandItemCommand, Source={x:Reference enterpriseSelectorPage}}" CommandParameter="{Binding}">
                                     <Image BackgroundColor="Transparent" HeightRequest="30" WidthRequest="30" Margin="0,0,8,0">

@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Android.Service.VR;
 using InquirerForAndroid.Models;
 using InquirerForAndroid.Services;
 using InquirerForAndroid.Views;
@@ -21,39 +22,53 @@ namespace InquirerForAndroid.ViewModels
         {
             //GoToAuth();
             Debug.WriteLine($"SurveySelectorViewModel: ctor");
-            Title = "Выбор опроса";
+            Title = "Выбор опроса" + (Enterprise == null ? "" : $" ({Enterprise.ShortName})");
             IsBackButtonPresent = true;
-            LoadEnterprisesCommand = new Command(async isForced => await LoadItemsMethod(isForced as bool? ?? true));
-            ExpandItemCommand = new Command(ExpandItemMethod);
-            LoadEnterprisesCommand.Execute(false);
+            LoadReportsCommand = new Command(async isForced => await LoadReportsMethod(isForced as bool? ?? true));
+            LoadReportsCommand.Execute(false);
+            SurveySelectedCommand = new Command(SurveySelectedMethod);
         }
 
-        private void ExpandItemMethod(object obj)
+        public SurveySelectorViewModel(EnterpriseInfo info) : this()
         {
-            var info = (EnterpriseInfo)obj;
-            var isChildrenVisible = !info.IsExpanded;
-            info.Children.ForEach(ei => ((EnterpriseInfo)ei).IsVisible = isChildrenVisible);
-            info.RaiseAll();
-            SaveEnterprisesVisibility();
+            Enterprise = info;
+            Surveys = info.Surveys.Select(s => (SurveyInfo) s).ToList();
         }
 
-        public ICommand LoadEnterprisesCommand { get; set; }
-        public ICommand ExpandItemCommand { get; set; }
-        public ICommand SearchEnterpriseCommand { get; set; }
+        public EnterpriseInfo Enterprise { get; set; }
 
-        private void GoToAuth()
+        private void SurveySelectedMethod(object obj)
         {
-            AppShell.GoToPage(new AuthViewModel());
+            var surveyInfo = (SurveyInfo) obj;
+            if (surveyInfo.GlobalStatus == GlobalSurveyStatuses.Completed)
+            {
+                WrapperPage.GoToView(new ReportViewModel(this, surveyInfo));
+            }
+            else
+            {
+                WrapperPage.GoToView(new SurveyViewModel(this, surveyInfo));
+            }
         }
+
+        public int EnterpriseId => Enterprise?.EnterpriseId ?? 0;
+
+        public ICommand LoadReportsCommand { get; set; }
+        public ICommand SurveySelectedCommand { get; set; }
 
         protected override void OnBackButtonPressed()
         {
             WrapperPage.GoToView(new EnterpriseSelectorViewModel(), forward: false);
         }
 
-        public List<EnterpriseInfo> Enterprises
+        public override bool IsSameAs(ViewModelBase viewModel)
         {
-            get => GetVal<List<EnterpriseInfo>>();
+            return viewModel is SurveySelectorViewModel otherSelectorViewModel
+                   && otherSelectorViewModel.EnterpriseId == EnterpriseId;
+        }
+
+        public List<SurveyInfo> Surveys
+        {
+            get => GetVal<List<SurveyInfo>>();
             set => SetVal(value);
         }
 
@@ -66,42 +81,31 @@ namespace InquirerForAndroid.ViewModels
                 if (!value.IsNullOrEmpty())
                 {
                     var lowerText = value.ToLower();
-                    Enterprises.ForEach(ei => ei.IsVisible = ei.Name.ToLower().Contains(lowerText) || ei.ShortName.ToLower().Contains(lowerText));
+                    Surveys.ForEach(si => si.IsVisible = si.SurveyName.ToLower().Contains(lowerText));
                 }
                 else
                 {
-                    RestoreEnterprisesVisibility();
+                    Surveys.ForEach(si => si.IsVisible = true);
                 }
             }
         }
 
-        private List<EnterpriseInfo> _rawEnterprises;
-        private static Dictionary<int, bool> _visibleEnterprises = new Dictionary<int, bool>();
-
-        public SurveySelectorViewModel(EnterpriseInfo info) : this()
-        {
-        }
-
-        public async Task LoadItemsMethod(bool forceRefresh)
+        public async Task LoadReportsMethod(bool forceRefresh)
         {
             if (IsRefreshing)
             {
                 return;
             }
 
-            IsRefreshing = true;
-
             try
             {
-                SaveEnterprisesVisibility();
-                _rawEnterprises = await DataStore.GetEnterprises(forceRefresh);
-                Enterprises = _rawEnterprises.GetFlatEnterprisesList();
-                RestoreEnterprisesVisibility();
+                IsRefreshing = true;
+                var reports = await DataStore.GetReports(forceRefresh);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex);
-                if (forceRefresh || Enterprises.Count == 0)
+                if (forceRefresh || Surveys.Count == 0)
                 {
                     await AppShell.Alert("Ошибка связи", ex.Message, null, "Закрыть");
                 }
@@ -109,26 +113,7 @@ namespace InquirerForAndroid.ViewModels
             finally
             {
                 IsRefreshing = false;
-                //RaisePropertyChanged(nameof(IsNoDocumentsPresent));
             }
-        }
-
-        private void SaveEnterprisesVisibility()
-        {
-            _visibleEnterprises = Enterprises?.ToDictionary(e => e.EnterpriseId, e => e.IsVisible)
-                                  ?? new Dictionary<int, bool>();
-        }
-
-        private void RestoreEnterprisesVisibility()
-        {
-            Enterprises.ForEach(e =>
-            {
-                if (_visibleEnterprises.ContainsKey(e.EnterpriseId))
-                {
-                    e.IsVisible = _visibleEnterprises[e.EnterpriseId];
-                }
-            });
-            Enterprises.Where(ei => ei.Parent == null).ForEach(ei => ei.IsVisible = true);
         }
     }
 }

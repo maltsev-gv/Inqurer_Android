@@ -36,7 +36,7 @@ namespace InquirerForAndroid.ViewModels
                     Globals.CurrentEnterpriseId = enterprises.GetEnterprisesByFilter(null, true).FirstOrDefault()?.EnterpriseId ?? 0;
                     if (Globals.CurrentEnterpriseId == 0)
                     {
-                        WrapperPage.GoToView(new EnterpriseSelectorViewModel(), false);
+                        WrapperPage.GoToView(new EnterpriseSelectorViewModel(), isScrollNeeded: false);
                     }
                 }
                 WrapperPage.GoToView(new AuthViewModel());

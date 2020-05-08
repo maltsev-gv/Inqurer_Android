@@ -21,7 +21,8 @@
             <!--<StackLayout Orientation="Horizontal">-->
             <ImageButton Grid.Column="0" Source="back.png" WidthRequest="30" BackgroundColor="Transparent" 
                          IsVisible="{Binding ActiveView.BindingContext.IsBackButtonPresent}" Command="{Binding ActiveView.BindingContext.BackButtonPressedCommand}"/>
-            <Label Grid.Column="1" Text="{Binding ActiveView.BindingContext.Title}" VerticalOptions="Center" FontSize="22" TextColor="White" Margin="10,0,0,0"/>
+            <Label Grid.Column="1" Text="{Binding ActiveView.BindingContext.Title}" VerticalOptions="Center" FontSize="22" TextColor="White" Margin="10,0,0,0"
+                   LineBreakMode="TailTruncation"/>
         <!--</StackLayout>-->
         </Grid>
     </Shell.TitleView>
@@ -35,7 +36,7 @@
             </Grid.ColumnDefinitions>
             <views:AuthView Grid.Column="0" WidthRequest="{Binding FullWidth}" IsVisible="False"/>
             <views:EnterpriseSelectorView Grid.Column="1" WidthRequest="{Binding FullWidth}" IsVisible="False"/>
-            <views:SurveySelectorView Grid.Column="2" WidthRequest="{Binding FullWidth}" IsVisible="False"/>
+            <!--<views:SurveySelectorView Grid.Column="2" WidthRequest="{Binding FullWidth}" IsVisible="False"/>-->
         </Grid>
     </ScrollView>
 </ContentPage>

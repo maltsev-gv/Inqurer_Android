@@ -44,5 +44,10 @@ namespace InquirerForAndroid.ViewModels
         }
 
         public ICommand AuthCommand { get; set; }
+
+        public override bool IsSameAs(ViewModelBase viewModel)
+        {
+            return viewModel is AuthViewModel;
+        }
     }
 }

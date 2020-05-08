@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using InquirerForAndroid.Models;
+using Xamarin.Forms;
 
 namespace InquirerForAndroid.Services
 {
@@ -13,5 +14,7 @@ namespace InquirerForAndroid.Services
         Task<string> GetApk(int apkId, Action<double> progressChangedAction = null);
         int UnpackTime { get; set; }
         string ConnectionErrorString { get; }
+        Task<List<SurveyReportInfo>> GetReports(bool forceRefresh = false);
+        ImageSource GetImageSource(string imageUrl);
     }
 }

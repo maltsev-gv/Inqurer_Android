@@ -46,6 +46,12 @@
     <Compile Update="Views\AuthPage.xaml.cs">
       <DependentUpon>AuthPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\ReportView.xaml.cs">
+      <DependentUpon>ReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SurveyView.xaml.cs">
+      <DependentUpon>SurveyView.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\WrapperPage.xaml.cs">
       <DependentUpon>WrapperPage.xaml</DependentUpon>
     </Compile>

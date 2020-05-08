@@ -8,41 +8,22 @@ namespace InquirerForAndroid.Services
 {
     public class JsonConverters
     {
-        public static JsonConverter[] AllConverters = new JsonConverter[]
+        public static JsonConverter[] AllConverters = 
         {
-            new SurveyInfoConverter(),
-            new BlockInfoConverter(),
-            new QuestionInfoConverter(),
-            new EnterpriseInfoConverter(),
+            new CustomJsonConverter<ISurveyInfo, SurveyInfo>(),
+            new CustomJsonConverter<IBlockInfo, BlockInfo>(),
+            new CustomJsonConverter<IQuestionInfo, QuestionInfo>(),
+            new CustomJsonConverter<IEnterpriseInfo, EnterpriseInfo>(),
+            new CustomJsonConverter<IDiagramInfo, DiagramInfo>(),
+            new CustomJsonConverter<IWishInfo, WishInfo>(),
+            new CustomJsonConverter<IWishOptionInfo, WishOptionInfo>(),
         };
 
-        private class SurveyInfoConverter : CustomCreationConverter<ISurveyInfo>
+        public class CustomJsonConverter<I, T> : CustomCreationConverter<I> where T: class, I, new()
         {
-            public override ISurveyInfo Create(Type objectType)
+            public override I Create(Type objectType)
             {
-                return new SurveyInfo();
-            }
-        }
-
-        private class BlockInfoConverter : CustomCreationConverter<IBlockInfo>
-        {
-            public override IBlockInfo Create(Type objectType)
-            {
-                return new BlockInfo();
-            }
-        }
-        private class QuestionInfoConverter : CustomCreationConverter<IQuestionInfo>
-        {
-            public override IQuestionInfo Create(Type objectType)
-            {
-                return new QuestionInfo();
-            }
-        }
-        private class EnterpriseInfoConverter : CustomCreationConverter<IEnterpriseInfo>
-        {
-            public override IEnterpriseInfo Create(Type objectType)
-            {
-                return new EnterpriseInfo();
+                return new T();
             }
         }
     }

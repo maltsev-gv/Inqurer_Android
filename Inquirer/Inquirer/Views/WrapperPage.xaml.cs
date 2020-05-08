@@ -64,7 +64,7 @@ namespace InquirerForAndroid.Views
             await semaphoreSlim.WaitAsync();
         }
 
-        public static async void GoToView(ViewModelBase viewModel, bool isScrollNeeded = true, bool forward = true)
+        public static async void GoToView(ViewModelBase viewModel, bool forward = true, bool isScrollNeeded = true)
         {
             if (_wrapperPage == null)
             {
@@ -97,6 +97,13 @@ namespace InquirerForAndroid.Views
             }
         }
 
+        private static Type[] _allowedTypes =
+        {
+            typeof(SurveySelectorView),
+            typeof(SurveyView),
+            typeof(ReportView),
+        };
+
         private static ContentView GetViewByModel(ViewModelBase viewModel, bool forward)
         {
             var typeName = viewModel.GetType().Name;
@@ -106,7 +113,29 @@ namespace InquirerForAndroid.Views
                 throw new ArgumentException($"{nameof(GetViewByModel)}: invalid view model: {viewModel}");
             }
             var viewName = $"{match.Groups[1].Value}View";
-            return (ContentView)_wrapperPage.grid.Children.Single(v => v.GetType().Name == viewName);
+            var view = (ContentView) _wrapperPage.grid.Children.FirstOrDefault(v =>
+                v.GetType().Name == viewName && ((ViewModelBase) v.BindingContext).IsSameAs(viewModel));
+            if (view == null)
+            {
+                var curIndex = _wrapperPage.grid.Children.IndexOf(_wrapperViewModel.ActiveView);
+                var type = _allowedTypes.FirstOrDefault(t => t.Name == viewName);
+                if (type == null)
+                {
+                    throw new ArgumentException($"{nameof(GetViewByModel)}: there's no type named {viewName}");
+                }
+
+                view = (ContentView) Activator.CreateInstance(type);
+                view.BindingContext = viewModel;
+                view.WidthRequest = Globals.ScreenWidth - 6;
+                _wrapperPage.grid.Children.Insert(forward ? curIndex + 1 : curIndex, view);
+                while (_wrapperPage.grid.Children.Count > _wrapperPage.grid.ColumnDefinitions.Count)
+                {
+                    _wrapperPage.grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+                }
+                Grid.SetColumn(view, forward ? curIndex + 1 : curIndex);
+            }
+
+            return view;
         }
 
         private static ViewModelBase _pendingViewModel;
@@ -114,7 +143,7 @@ namespace InquirerForAndroid.Views
         {
             if (_pendingViewModel != null)
             {
-                GoToView(_pendingViewModel, false);
+                GoToView(_pendingViewModel, isScrollNeeded: false);
                 _pendingViewModel = null;
             }
         }

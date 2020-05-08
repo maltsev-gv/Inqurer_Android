@@ -10,6 +10,5 @@ namespace InquirerForAndroid.Services
         T Cast<T>(Java.Lang.Object obj) where T : class;
         List<T> GetListViewVisibleItems<T>(Xamarin.Forms.ListView lv) where T : class;
         void ScrollListViewTo(Xamarin.Forms.ListView lv, int x, int y);
-        void SignToListViewScrollEvent(Xamarin.Forms.ListView lv, Action<Point> OnScrollMethod);
     }
 }

@@ -65,5 +65,10 @@ namespace InquirerForAndroid.ViewModels
         public double FullWidth => Globals.ScreenWidth;
         public double HalfWidth => FullWidth / 2;
         public double QuarterWidth => FullWidth / 4;
+
+        public virtual bool IsSameAs(ViewModelBase viewModel)
+        {
+            return false;
+        }
     }
 }

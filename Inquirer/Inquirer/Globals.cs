@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using InquirerForAndroid.Models;
 using InquirerForAndroid.ViewModels;
 using Xamarin.Forms;
@@ -11,6 +8,8 @@ namespace InquirerForAndroid
     public class Globals
     {
         public static string BaseUrl = "http://84.201.162.94:45000/api/inquirer/";
+
+        public static string DateFormat = "dd.MM.yyyy";
 
         public static UserInfo CurrentUser
         {
@@ -22,11 +21,7 @@ namespace InquirerForAndroid
             }
         }
 
-        public static int CurrentEnterpriseId
-        {
-            get => _currentEnterpriseId;
-            set => _currentEnterpriseId = value;
-        }
+        public static int CurrentEnterpriseId { get; set; }
 
         public static ViewModelBase CurrentViewModel { get; set; }
 
@@ -46,8 +41,6 @@ namespace InquirerForAndroid
         public static Action ScreenSizeChanged;
 
         private static UserInfo _currentUser;
-        private static Page _activeViewModel;
-        private static int _currentEnterpriseId;
         private static double _screenWidth;
     }
 }

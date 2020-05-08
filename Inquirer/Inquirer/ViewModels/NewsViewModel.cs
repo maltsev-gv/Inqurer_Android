@@ -36,7 +36,6 @@ namespace InquirerForAndroid.ViewModels
                     return;
                 }
                 NewsBlocks = new ObservableCollection<NewsBlockInfo>(news);
-                NewsBlocks.ForEach(nb => nb.CanBeExpandedCalculated = CanBeExpandedCalculated);
             }
             catch (Exception ex)
             {
@@ -46,18 +45,6 @@ namespace InquirerForAndroid.ViewModels
             {
                 IsRefreshing = false;
             }
-        }
-
-        private void CanBeExpandedCalculated(NewsBlockInfo info)
-        {
-            if (!info.CanBeExpanded)
-            {
-                info.IsExpanded = true; // у малых блоков ставим автовысоту 
-                return;
-            }
-
-            // по умолчанию сворачиваем новые крупные блоки новостей. Если блок был ранее свернут/развернут - восстанавливаем его состояние
-            info.IsExpanded = _expandedNews.ContainsKey(info.NewsBlockId) && _expandedNews[info.NewsBlockId];
         }
 
         public ICommand LoadNewsCommand { get; set; }

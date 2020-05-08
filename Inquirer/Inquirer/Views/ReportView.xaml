@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:InquirerForAndroid.Converters;assembly=InquirerForAndroid"
+             xmlns:userControls="clr-namespace:InquirerForAndroid.UserControls;assembly=InquirerForAndroid"
+             xmlns:viewmodels="clr-namespace:InquirerForAndroid.ViewModels"
+             xmlns:models="clr-namespace:InquirerForAndroid.Models;assembly=InquirerForAndroid"
+             xmlns:xfItemsControl="clr-namespace:InquirerForAndroid.UserControls.XFItemsControl;assembly=InquirerForAndroid"
+             xmlns:inquirer="clr-namespace:Rcn.Interfaces.Inquirer;assembly=Rcn.Interfaces"
+             mc:Ignorable="d"
+             SizeChanged="ReportView_OnSizeChanged"
+             x:Class="InquirerForAndroid.Views.ReportView"
+             x:Name="reportView"
+             >
+    <!--<Shell.FlyoutBehavior>Flyout</Shell.FlyoutBehavior>-->
+    <Shell.BackgroundColor>
+        <x:StaticResource>EvrazOrange</x:StaticResource>
+    </Shell.BackgroundColor>
+
+    <ContentView.BindingContext>
+        <viewmodels:ReportViewModel/>
+    </ContentView.BindingContext>
+
+    <ContentView.Resources>
+        <DataTemplate x:Key="diagramTemplate">
+            <ViewCell>
+                <ViewCell.BindingContext>
+                    <models:DiagramInfo/>
+                </ViewCell.BindingContext>
+                <Grid>
+                    <Frame BorderColor="{StaticResource EvrazOrange}" Padding="10">
+                        <Frame.Style>
+                            <Style TargetType="Frame">
+                                <Style.Triggers>
+                                    <DataTrigger TargetType="Frame" Binding="{Binding PublishOn}" Value="{x:Static inquirer:PublicationPlaces.Nowhere}">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Frame" Binding="{Binding PublishOn}" Value="{x:Static inquirer:PublicationPlaces.Site}">
+                                        <Setter Property="IsVisible" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Frame.Style>
+                        <Grid VerticalOptions="Start" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Text="{Binding Title}" FontSize="16" Margin="0,10"/>
+                            <Image Grid.Row="1" Source="{Binding ImageSource}" />
+                            <Label Grid.Row="2" Text="{Binding Description}" Margin="0,10">
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Style.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding PublishDescriptionOn}" Value="{x:Static inquirer:PublicationPlaces.Nowhere}">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding PublishDescriptionOn}" Value="{x:Static inquirer:PublicationPlaces.Site}">
+                                                <Setter Property="IsVisible" Value="False"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+    </ContentView.Resources>
+
+
+    <Grid Margin="8" x:Name="mainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Text="{Binding Report.Title}" FontSize="18" FontAttributes="Italic,Bold" Margin="0,20" HorizontalOptions="Center" />
+        <Label Grid.Row="1" Text="{Binding Report.Header}" FontSize="16" />
+        <userControls:ContentButton Grid.Row="2" IsVisible="{Binding Report.Wishes, Converter={converters:EnumerableToBoolConverter}}" >
+            <Frame >
+                <Label Text="{Binding WishesCountStr}" FontSize="18"/>
+            </Frame>
+        </userControls:ContentButton>
+        <ScrollView Grid.Row="3" VerticalOptions="Start">
+            <StackLayout>
+                <xfItemsControl:ItemsControl x:Name="itemsView" Grid.Row="2" VerticalOptions="Start" 
+                                         ItemsSource="{Binding Report.Diagrams}" 
+                                         ItemTemplate="{StaticResource diagramTemplate}"/>
+                <Label Grid.Row="4" Text="{Binding Report.Footer}" FontSize="16"/>
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+</ContentView>

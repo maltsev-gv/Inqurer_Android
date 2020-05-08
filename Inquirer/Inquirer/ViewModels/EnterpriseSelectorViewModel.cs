@@ -48,11 +48,6 @@ namespace InquirerForAndroid.ViewModels
         public ICommand ExpandItemCommand { get; set; }
         public ICommand EnterpriseSelectedCommand { get; set; }
 
-        private void GoToAuth()
-        {
-            AppShell.GoToPage(new AuthViewModel());
-        }
-
         public List<EnterpriseInfo> Enterprises
         {
             get => GetVal<List<EnterpriseInfo>>();
@@ -107,7 +102,6 @@ namespace InquirerForAndroid.ViewModels
             finally
             {
                 IsRefreshing = false;
-                //RaisePropertyChanged(nameof(IsNoDocumentsPresent));
             }
         }
 
@@ -127,6 +121,11 @@ namespace InquirerForAndroid.ViewModels
                 }
             });
             Enterprises.Where(ei => ei.Parent == null).ForEach(ei => ei.IsVisible = true);
+        }
+
+        public override bool IsSameAs(ViewModelBase viewModel)
+        {
+            return viewModel is EnterpriseSelectorViewModel;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace InquirerForAndroid.Views
 
         private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
         {
+            ViewModel.SurveySelectedCommand.Execute(e.Item);
         }
 
         public bool IsScrolled { get; set; }

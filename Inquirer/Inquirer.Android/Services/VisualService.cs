@@ -64,22 +64,6 @@ namespace Inquirer.Droid.Services
             nativeListView.ScrollTo(x, y);
         }
 
-        public void SignToListViewScrollEvent(Xamarin.Forms.ListView lv, Action<Point> OnScrollMethod)
-        {
-            Xamarin.Forms.Platform.Android.ListViewRenderer renderer =
-                (Xamarin.Forms.Platform.Android.ListViewRenderer)Xamarin.Forms.Platform.Android.Platform.GetRenderer(lv);
-
-            ListView nativeListView = renderer.Control;
-            nativeListView.ScrollChange += (s, e) => 
-                {
-                    OnScrollMethod?.Invoke(new Point()
-                    {
-                        X = e.ScrollX,
-                        Y = e.ScrollY,
-                    });
-            };
-        }
-
         public List<T> GetListViewVisibleItems<T>(Xamarin.Forms.ListView lv) where T : class
         {
             List<T> visibleItems = new List<T>();

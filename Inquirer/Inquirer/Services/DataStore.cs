@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Resources;
 using System.Security.Authentication;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -60,6 +61,7 @@ namespace InquirerForAndroid.Services
         private List<EnterpriseInfo> _enterprises = new List<EnterpriseInfo>();
         private List<NewsBlockInfo> _newsBlocks = new List<NewsBlockInfo>();
         private List<AnswerInfo> _answers = new List<AnswerInfo>();
+        private List<SurveyReportInfo> _surveyReports = new List<SurveyReportInfo>();
 
         private IDeviceService _deviceService;
 
@@ -70,15 +72,49 @@ namespace InquirerForAndroid.Services
             return await DoRequest<EnterpriseInfo>("Enterprises", null, forceRefresh);
         }
 
+        public async Task<List<SurveyReportInfo>> GetReports(bool forceRefresh = false)
+        {
+            return await DoRequest<SurveyReportInfo>("SurveyReports", new SurveyReportInfo[] { }, forceRefresh);
+        }
+
+        public ImageSource GetImageSource(string imageUrl)
+        {
+            if (imageUrl.IsNullOrEmpty())
+            {
+                return null;
+            }
+
+            if (Application.Current.Properties.ContainsKey(imageUrl))
+            {
+                return ImageSource.FromStream(() => new MemoryStream((byte[]) Application.Current.Properties[imageUrl]));
+            }
+
+            try
+            {
+                var imageBuf = RequestServiceHelper.DownloadDataFromWebMethod(imageUrl, out var responseHeaders, _headers);
+                Application.Current.Properties[imageUrl] = imageBuf;
+                Task.Run(async () => await Application.Current.SavePropertiesAsync());
+                return ImageSource.FromStream(() => new MemoryStream(imageBuf));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{nameof(GetImageSource)} ({imageUrl}): {ex}");
+            }
+
+            return null;
+        }
+
         private async Task<List<T>> DoRequest<T>(string methodName, object model, bool forceRefresh) where T: class
         {
             var list = typeof(T) == typeof(EnterpriseInfo)
                 ? _enterprises
                 : typeof(T) == typeof(NewsBlockInfo)
-                    ? (IList)_newsBlocks
+                    ? _newsBlocks
                     : typeof(T) == typeof(AnswerInfo)
                         ? _answers
-                        : throw new ArgumentException($"{nameof(DoRequest)}: invalid type: {typeof(T)}");
+                        : typeof(T) == typeof(SurveyReportInfo)
+                            ? (IList) _surveyReports
+                            : throw new ArgumentException($"{nameof(DoRequest)}: invalid type: {typeof(T)}");
 
             Debug.WriteLine($"{nameof(DoRequest)}: start getting {typeof(T).Name}");
 
