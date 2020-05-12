@@ -12,6 +12,7 @@
              mc:Ignorable="d"
              x:Class="InquirerForAndroid.Views.SurveySelectorView"
              SizeChanged="SurveySelectorView_OnSizeChanged"
+             WidthRequest="{Binding FullWidthReduced}"
              x:Name="surveySelectorPage">
     <ContentView.BindingContext>
         <viewmodels:SurveySelectorViewModel/>

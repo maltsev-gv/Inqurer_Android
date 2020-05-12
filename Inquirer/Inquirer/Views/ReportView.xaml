@@ -11,6 +11,7 @@
              xmlns:inquirer="clr-namespace:Rcn.Interfaces.Inquirer;assembly=Rcn.Interfaces"
              mc:Ignorable="d"
              SizeChanged="ReportView_OnSizeChanged"
+             WidthRequest="{Binding FullWidthReduced}"
              x:Class="InquirerForAndroid.Views.ReportView"
              x:Name="reportView"
              >
@@ -30,7 +31,7 @@
                     <models:DiagramInfo/>
                 </ViewCell.BindingContext>
                 <Grid>
-                    <Frame BorderColor="{StaticResource EvrazOrange}" Padding="10">
+                    <Frame BorderColor="{StaticResource EvrazOrange}" Padding="10" Margin="0,2">
                         <Frame.Style>
                             <Style TargetType="Frame">
                                 <Style.Triggers>
@@ -73,7 +74,7 @@
     </ContentView.Resources>
 
 
-    <Grid Margin="8" x:Name="mainGrid">
+    <Grid Margin="4" x:Name="mainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -81,18 +82,18 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Text="{Binding Report.Title}" FontSize="18" FontAttributes="Italic,Bold" Margin="0,20" HorizontalOptions="Center" />
-        <Label Grid.Row="1" Text="{Binding Report.Header}" FontSize="16" />
-        <userControls:ContentButton Grid.Row="2" IsVisible="{Binding Report.Wishes, Converter={converters:EnumerableToBoolConverter}}" >
-            <Frame >
-                <Label Text="{Binding WishesCountStr}" FontSize="18"/>
-            </Frame>
-        </userControls:ContentButton>
-        <ScrollView Grid.Row="3" VerticalOptions="Start">
+        <Label Grid.Row="0" Text="{Binding Report.Title}" FontSize="18" FontAttributes="Italic,Bold" Margin="0,5,0,0" HorizontalOptions="Center" BackgroundColor="Aqua"/>
+        <ScrollView Grid.Row="3" VerticalOptions="Start" Margin="0" BackgroundColor="Bisque">
             <StackLayout>
+                <Label Grid.Row="1" Text="{Binding Report.Header}" FontSize="16" />
+                <userControls:ContentButton Grid.Row="2" IsVisible="{Binding Report.Wishes, Converter={converters:EnumerableToBoolConverter}}" >
+                    <Frame>
+                        <Label Text="{Binding WishesCountStr}" FontSize="18" Margin="10,4"/>
+                    </Frame>
+                </userControls:ContentButton>
                 <xfItemsControl:ItemsControl x:Name="itemsView" Grid.Row="2" VerticalOptions="Start" 
-                                         ItemsSource="{Binding Report.Diagrams}" 
-                                         ItemTemplate="{StaticResource diagramTemplate}"/>
+                                             ItemsSource="{Binding Report.Diagrams}" 
+                                             ItemTemplate="{StaticResource diagramTemplate}"/>
                 <Label Grid.Row="4" Text="{Binding Report.Footer}" FontSize="16"/>
             </StackLayout>
         </ScrollView>

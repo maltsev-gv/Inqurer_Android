@@ -15,6 +15,7 @@ namespace InquirerForAndroid.ViewModels
             Globals.ScreenSizeChanged += () =>
             {
                 RaisePropertyChanged(nameof(FullWidth));
+                RaisePropertyChanged(nameof(FullWidthReduced));
                 RaisePropertyChanged(nameof(HalfWidth));
                 RaisePropertyChanged(nameof(QuarterWidth));
             };
@@ -63,6 +64,7 @@ namespace InquirerForAndroid.ViewModels
         }
 
         public double FullWidth => Globals.ScreenWidth;
+        public double FullWidthReduced => Globals.ScreenWidth - 6;
         public double HalfWidth => FullWidth / 2;
         public double QuarterWidth => FullWidth / 4;
 

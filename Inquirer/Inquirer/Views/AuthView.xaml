@@ -9,6 +9,7 @@
              mc:Ignorable="d"
              SizeChanged="AuthView_OnSizeChanged"
              x:Class="InquirerForAndroid.Views.AuthView"
+             WidthRequest="{Binding FullWidth}"
              >
     <!--<Shell.FlyoutBehavior>Flyout</Shell.FlyoutBehavior>-->
     <Shell.BackgroundColor>

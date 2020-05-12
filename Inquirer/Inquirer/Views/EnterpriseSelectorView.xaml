@@ -12,6 +12,7 @@
              x:Name="enterpriseSelectorPage"
              SizeChanged="EnterpriseSelectorView_OnSizeChanged"
              MeasureInvalidated="EnterpriseSelectorView_OnMeasureInvalidated"
+             WidthRequest="{Binding FullWidth}"
              >
     <ContentView.BindingContext>
         <viewmodels:EnterpriseSelectorViewModel/>

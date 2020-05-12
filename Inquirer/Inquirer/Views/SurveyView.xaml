@@ -8,6 +8,7 @@
              xmlns:viewmodels="clr-namespace:InquirerForAndroid.ViewModels"
              mc:Ignorable="d"
              SizeChanged="SurveyView_OnSizeChanged"
+             WidthRequest="{Binding FullWidthReduced}"
              x:Class="InquirerForAndroid.Views.SurveyView"
              >
     <!--<Shell.FlyoutBehavior>Flyout</Shell.FlyoutBehavior>-->

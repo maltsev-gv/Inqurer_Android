@@ -126,7 +126,7 @@ namespace InquirerForAndroid.Views
 
                 view = (ContentView) Activator.CreateInstance(type);
                 view.BindingContext = viewModel;
-                view.WidthRequest = Globals.ScreenWidth - 6;
+                //view.WidthRequest = Globals.ScreenWidth - 6;
                 _wrapperPage.grid.Children.Insert(forward ? curIndex + 1 : curIndex, view);
                 while (_wrapperPage.grid.Children.Count > _wrapperPage.grid.ColumnDefinitions.Count)
                 {
